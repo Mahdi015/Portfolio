@@ -1,0 +1,65 @@
+.portfolio-contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto !important;
+  width: 100%;
+  flex-direction: column;
+}
+.contact-header {
+  margin-top: 7rem;
+  margin-bottom: 2rem;
+}
+.contact-header h2 {
+  font-size: 42px;
+  font-weight: 600;
+  text-transform: 600;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: white;
+  text-transform: uppercase;
+}
+.contact-header span {
+  font-weight: 600;
+  color: #ff4a57;
+}
+.custominputteext {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #999379 !important;
+  outline: none !important;
+  border-color: #999379 !important;
+}
+.custominputteext:hover {
+  background: transparent !important;
+  border-color: tomato !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.testes {
+  margin: 0 !important;
+}
+.contact-btton {
+  text-decoration: none;
+  color: white;
+  font-size: 13px;
+  text-transform: capitalize;
+  padding: 20px 20px;
+  letter-spacing: 0.6px;
+  font-weight: 600;
+  background: #ff4a57;
+  line-height: 10px;
+  border: none;
+  border-radius: 4px;
+  transition: all 0.4s ease-in-out 0s;
+  margin-bottom: 10px;
+}
+.contact-btton:hover {
+  background: white;
+  color: #ff4a57;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
