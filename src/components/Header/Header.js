@@ -1,5 +1,5 @@
 import React from "react";
-import ena from "./ena.png";
+import ena from "./test.png";
 import "./Header.css";
 import Text from "./text";
 import { Element } from "react-scroll";

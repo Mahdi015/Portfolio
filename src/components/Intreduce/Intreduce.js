@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import "./Intreduce.css";
-import ena from "./ena.png";
+import ena from "./ena1.png";
 import { Element } from "react-scroll";
 const Intreduce = () => {
   const [ref1, inView1] = useInView({
