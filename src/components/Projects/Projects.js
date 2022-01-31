@@ -43,7 +43,11 @@ const Projects = () => {
               <div className="project-details">
                 <p>Pet Adoption Website</p>
               </div>
-              <a href="#" className="project-btton">
+              <a
+                target="_blank"
+                href="https://zen-heyrovsky-6f150d.netlify.app"
+                className="project-btton"
+              >
                 Live Demo
               </a>
             </div>
