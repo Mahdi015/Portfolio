@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TextTransition, { presets } from "react-text-transition";
-const TEXTS = ["Web Developer", "Web Designer"];
+const TEXTS = ["Web Developer", "Freelancer"];
 const Text = () => {
   const [index, setIndex] = useState(0);
   useEffect(() => {

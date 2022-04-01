@@ -3,6 +3,7 @@ import "./Projects.css";
 import test from "./1.PNG";
 import noimg from "./noimg.png";
 import covid from "./covid-project.PNG";
+import ilias from "./ilias.png";
 import { Element } from "react-scroll";
 import { useInView } from "react-intersection-observer";
 const Projects = () => {
@@ -65,11 +66,15 @@ const Projects = () => {
               </a>
             </div>
             <div className="project-card">
-              <img src={noimg} />
+              <img src={ilias} />
               <div className="project-details">
                 <p>E-commerce Website</p>
               </div>
-              <a href="#" className="project-btton">
+              <a
+                href="https://inspiring-joliot-f65422.netlify.app"
+                target="_blank"
+                className="project-btton"
+              >
                 Live Demo
               </a>
             </div>

@@ -1,0 +1,76 @@
+.experiencecontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.experience-header h2 {
+  font-size: 42px;
+  font-weight: 600;
+  text-transform: 600;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: white;
+  text-transform: uppercase;
+}
+.experience-header span {
+  font-weight: 600;
+  color: #ff4a57;
+}
+.experiencecontent {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin: 80px 0 40px 0;
+}
+.experiencecol {
+  padding: 20px;
+  width: 500px;
+  height: 400px;
+  background-color: #232641;
+  box-shadow: 0 5px 20px 0 rgb(69 67 96 / 10%);
+  border-radius: 20px;
+  position: relative;
+ 
+}
+.line {
+  content: "";
+  position: absolute;
+  width: 1px;
+  background-color: #ff4c60;
+  top: 30px;
+  bottom: 30px;
+  left: 34px;
+  z-index: 100;
+}
+.timeline-container {
+  padding-left: 50px;
+  margin-bottom: 3rem;
+  position: relative;
+  background-color: inherit;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.timeline-container span{
+
+  font-size: 12px;
+  color: #ababab;
+ 
+}
+.timeline-container h3 {
+  font-size: 18px;
+  margin: 7px 0;
+  color: white;
+  font-weight: 500;
+}
+.graduate-icon{
+  position: absolute;
+  top: auto;
+  bottom: auto;
+  left: 4px;
+  color: #d03943;
+  font-size: 24px;
+  opacity: 0.9;
+}

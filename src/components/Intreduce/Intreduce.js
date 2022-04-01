@@ -1,7 +1,10 @@
 import React, { useRef, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import "./Intreduce.css";
-import ena from "./ena1.png";
+// import ena from "./ena1.png";
+import ena from "./me-light.webp";
+import cv from "./Resume.pdf";
+
 import { Element } from "react-scroll";
 const Intreduce = () => {
   const [ref1, inView1] = useInView({
@@ -60,9 +63,9 @@ const Intreduce = () => {
                 <span>Email</span>: ferianimahdi93@gmail.com
               </div>
             </div>
-            {/* <a className="cv-btton" download href={ena}>
+            <a className="cv-btton" download href={cv}>
               Download Cv
-            </a> */}
+            </a>
           </div>
         </div>
       </Element>

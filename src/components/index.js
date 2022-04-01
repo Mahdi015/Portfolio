@@ -5,3 +5,4 @@ export { default as Myservices } from "./Myservices/Myservices";
 export { default as Projects } from "./Projects/Projects";
 export { default as Contact } from "./Contact-Me/Contact";
 export { default as Footer } from "./Footer/Footer";
+export { default as Experience } from "./Experience/Experience";

@@ -7,6 +7,7 @@ import {
   Projects,
   Contact,
   Footer,
+  Experience,
 } from "./components";
 import "./App.css";
 import ScrollToTop from "react-scroll-to-top";
@@ -20,6 +21,7 @@ export default function App() {
       <Header />
       <Intreduce />
       <Myservices />
+      <Experience />
       <Projects />
       <Contact />
       <Footer />

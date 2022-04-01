@@ -26,15 +26,37 @@ const Myservices = () => {
           >
             <div className="myservices-card ">
               <i class="fas fa-laptop-code"></i>
-              <h4>Front-End Deveoloper</h4>
+              <div>
+                <h4>web development</h4>
+              </div>
+              <div className="span-container">
+                {" "}
+                <span>
+                  Creating easy to use, user-friendly ecommerce apps , dynamic
+                  websites, and applications with best practices.
+                </span>
+              </div>
             </div>
             <div className="myservices-card">
               <i class="fas fa-server"></i>
-              <h4>Back-End Devoloper</h4>
+              <div>
+                {" "}
+                <h4>Market Analysis</h4>
+              </div>
+              <div className="span-container">
+                <span>
+                  I create intercative admin dashboard for your business, easy
+                  to use,display real-time and performance indicators.
+                </span>
+              </div>
             </div>
             <div className="myservices-card">
               <i class="fas fa-layer-group"></i>
-              <h4>ui ux developer</h4>
+              <h4>User experience</h4>
+              <span>
+                I create intercative and fully responsive websites design on
+                multiple devices.
+              </span>
             </div>
           </div>
         </div>
