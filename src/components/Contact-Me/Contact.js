@@ -32,11 +32,13 @@ const Contact = () => {
       subject,
     };
     let response = await fetch(
-      "http://myprotfolios.herokuapp.com/api/contactme",
+      "https://myprotfolios.herokuapp.com/api/contactme",
       {
         method: "POST",
+        mode: "cors",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify(details),
       }
