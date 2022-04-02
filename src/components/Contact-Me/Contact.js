@@ -32,7 +32,7 @@ const Contact = () => {
       subject,
     };
     let response = await fetch(
-      "https://myprotfolios.herokuapp.com/api/contactme",
+      "http://myprotfolios.herokuapp.com/api/contactme",
       {
         method: "POST",
         headers: {
