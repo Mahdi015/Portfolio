@@ -1,19 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Contact.css";
 import { Form, Row, Col, InputGroup, Button } from "react-bootstrap";
 import { Element } from "react-scroll";
+import toast from "react-hot-toast";
 
 const Contact = () => {
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    console.log(event);
-    const form = event.currentTarget;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log(e);
+    const form = e.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+      e.stopPropagation();
     }
     setValidated(true);
+  };
+  const sendMessage = async () => {
+    const { name, email, message, subject } = formValues;
+    let details = {
+      name,
+      email,
+      message,
+      subject,
+    };
+    let response = await fetch(
+      "https://myprotfolios.herokuapp.com/api/contactme",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(details),
+      }
+    );
+
+    return response;
+  };
+  useEffect(async () => {
+    if (validated) {
+      toast.promise(sendMessage(), {
+        loading: "Loading",
+        success: "Message Sent        ",
+        error: "Error ",
+      });
+      setFormValues({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+      setValidated(false);
+      // let result = await response.json();
+      // alert(result.status);
+    }
+  }, [validated]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    console.log(formValues);
   };
   return (
     <>
@@ -34,6 +87,9 @@ const Contact = () => {
                   required
                   type="text"
                   placeholder="Name"
+                  name="name"
+                  value={formValues.name}
+                  onChange={(e) => handleChange(e)}
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="formBasicEmail">
@@ -43,6 +99,9 @@ const Contact = () => {
                   required
                   type="email"
                   placeholder="Email"
+                  name="email"
+                  value={formValues.email}
+                  onChange={(e) => handleChange(e)}
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="validationCustom02">
@@ -52,6 +111,9 @@ const Contact = () => {
                   required
                   type="text"
                   placeholder="Subject"
+                  name="subject"
+                  value={formValues.subject}
+                  onChange={(e) => handleChange(e)}
                 />
               </Form.Group>
             </Row>
@@ -65,6 +127,9 @@ const Contact = () => {
                   className="custominputteext"
                   as="textarea"
                   rows={5}
+                  name="message"
+                  value={formValues.message}
+                  onChange={(e) => handleChange(e)}
                 />
               </Form.Group>
             </Row>

@@ -11,10 +11,12 @@ import {
 } from "./components";
 import "./App.css";
 import ScrollToTop from "react-scroll-to-top";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <div className="App">
+      <Toaster />
       <ScrollToTop smooth />
 
       <Navbar />

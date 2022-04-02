@@ -3,6 +3,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
 }
 .experience-header h2 {
   font-size: 42px;
@@ -22,6 +24,8 @@
   justify-content: space-around;
   width: 100%;
   margin: 80px 0 40px 0;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
 }
 .experiencecol {
   padding: 20px;
@@ -31,6 +35,8 @@
   box-shadow: 0 5px 20px 0 rgb(69 67 96 / 10%);
   border-radius: 20px;
   position: relative;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
  
 }
 .line {
@@ -73,4 +79,36 @@
   color: #d03943;
   font-size: 24px;
   opacity: 0.9;
+}
+
+
+@media screen and (max-width: 750px) {
+  .experiencecontent {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .experiencecol{
+    margin: 1rem 0;
+  }
+
+}
+
+
+
+@media screen and (max-width: 500px) {
+ 
+  .experiencecol{
+    width: 80%;
+    height: auto;
+  }
+  .experiencecol span{
+    font-size: 8px;
+
+  }
+  .experiencecol h3{
+    font-size: 13px;
+
+  }
+
 }

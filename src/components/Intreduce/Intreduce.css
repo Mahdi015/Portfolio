@@ -7,10 +7,10 @@
 .intreduce-img {
   display: flex;
   flex: 0.5;
-}
+} 
 .intreduce-img img {
-  width: 240px;
-  height: 320px;
+  width: 200px;
+  height: 280px;
 }
 .intreduce-text {
   flex: 0.5;
@@ -27,10 +27,10 @@
   color: white;
 }
 .intreduce-text p {
-  font-weight: 400;
-  color: white;
+  font-weight: 500;
+  color: #ababab;
   font-size: 15px;
-  letter-spacing: 0;
+  letter-spacing: 0.9px;
 }
 .about_details {
   margin-top: 1rem;
@@ -39,7 +39,7 @@
 }
 .ct-about {
   margin-bottom: 6px;
-  color: white;
+  color: #ababab;
 }
 .ct-about span {
   width: 150px;
@@ -47,6 +47,7 @@
   font-weight: 600;
   white-space: nowrap;
   text-transform: capitalize;
+  color: white;
 }
 .cv-btton {
   text-decoration: none;

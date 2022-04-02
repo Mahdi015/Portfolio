@@ -48,19 +48,19 @@ const Intreduce = () => {
             </p>
             <div className="about_details">
               <div className="ct-about">
-                <span>Name</span>: Mahdi
+                <span>Name :</span>Mahdi
               </div>
               <div className="ct-about">
-                <span>Age</span>: 23
+                <span>Age :</span>23
               </div>
               <div className="ct-about">
-                <span>Adresse</span>: Tunisia, Sfax
+                <span>Adresse :</span>Tunisia, Sfax
               </div>
               <div className="ct-about">
-                <span>Phone Number</span>: (+216)22 890 202
+                <span>Phone Number :</span>(+216)22 890 202
               </div>
               <div className="ct-about">
-                <span>Email</span>: ferianimahdi93@gmail.com
+                <span>Email :</span>ferianimahdi93@gmail.com
               </div>
             </div>
             <a className="cv-btton" download href={cv}>
