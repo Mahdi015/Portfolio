@@ -35,7 +35,6 @@ const Contact = () => {
       "https://myprotfolios.herokuapp.com/api/contactme",
       {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
           "Access-Control-Allow-Origin": "*",
