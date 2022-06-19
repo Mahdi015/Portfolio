@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Header,
   Intreduce,
@@ -12,21 +12,29 @@ import {
 import "./App.css";
 import ScrollToTop from "react-scroll-to-top";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./components/globalStyles";
+import { lightTheme, darkTheme } from "./components/Themes";
 
 export default function App() {
-  return (
-    <div className="App">
-      <Toaster />
-      <ScrollToTop smooth />
+  const [theme, setTheme] = useState("dark");
 
-      <Navbar />
-      <Header />
-      <Intreduce />
-      <Myservices />
-      <Experience />
-      <Projects />
-      <Contact />
-      <Footer />
-    </div>
+  return (
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <GlobalStyles />
+      <div className="App">
+        <Toaster />
+        <ScrollToTop smooth />
+
+        <Navbar theme={theme} setTheme={setTheme} />
+        <Header theme={theme} />
+        <Intreduce theme={theme} />
+        <Myservices theme={theme} />
+        <Experience theme={theme} />
+        <Projects theme={theme} />
+        <Contact theme={theme} />
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }

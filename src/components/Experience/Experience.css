@@ -3,8 +3,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
 }
 .experience-header h2 {
   font-size: 42px;
@@ -12,31 +12,29 @@
   text-transform: 600;
   margin-top: 5px;
   margin-bottom: 10px;
-  color: white;
   text-transform: uppercase;
 }
 .experience-header span {
   font-weight: 600;
-  color: #ff4a57;
+  color: #EA7186;
 }
 .experiencecontent {
   display: flex;
   justify-content: space-around;
   width: 100%;
   margin: 80px 0 40px 0;
-  transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
 }
 .experiencecol {
   padding: 20px;
   width: 500px;
   height: 400px;
-  background-color: #232641;
   box-shadow: 0 5px 20px 0 rgb(69 67 96 / 10%);
   border-radius: 20px;
   position: relative;
-  transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
  
 }
 .line {
@@ -60,15 +58,11 @@
   flex-direction: column;
 }
 .timeline-container span{
-
   font-size: 12px;
-  color: #ababab;
- 
 }
 .timeline-container h3 {
   font-size: 18px;
   margin: 7px 0;
-  color: white;
   font-weight: 500;
 }
 .graduate-icon{

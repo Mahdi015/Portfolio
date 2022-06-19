@@ -1,6 +1,6 @@
 .portfolio-container {
   margin: 12rem 0 0 0;
-  padding: 4rem 0 4rem 175px;
+  padding: 4rem 110px 4rem 175px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -18,20 +18,20 @@
 }
 .portfolio-header-p {
   margin-top: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .5px;
+  font-size: 16px;
   max-width: 70%;
   line-height: 26px;
-  color: white;
   font-family: var(--font-family);
+
 }
 .portfolio-header-img {
   position: relative;
   left: -15%;
   top: -50px;
-  transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
 }
 .portfolio-header-img img {
   width: 500px;
@@ -43,9 +43,9 @@
   padding: 0;
 }
 .portfolio-social li a {
-  border: 1px solid #ff4a57;
+  border: 1px solid #EA7186;
   border-radius: 50%;
-  color: #ff4a57;
+  color: #EA7186;
   width: 40px;
   height: 40px;
   font-size: 14px;
@@ -57,15 +57,45 @@
 }
 .portfolio-social li a:hover {
   color: white;
-  background-color: #ff4a57;
+  background-color: #EA7186;
 }
-@media screen and (max-width: 1120px) {
-  .portfolio-container {
-    padding: 4rem 0 4rem 115px;
-  }
+.cotainer3d{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
-@media screen and (max-width: 990px) {
+@media screen and (max-width: 1120px) {
+  /* .portfolio-container {
+    padding: 4rem 0 4rem 115px;
+  } */
+  .portfolio-container {
+    padding: 20px 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .portfolio-header-p {
+    max-width: 90%;
+  }
+  .portfolio-text-translition {
+    max-width: 100%;
+  }
+  .portfolio-header-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+  }
+  .portfolio-header{
+    padding: 0 60px;
+  }
+
+}
+
+/* @media screen and (max-width: 990px) {
   .portfolio-container {
     padding: 20px 60px;
     flex-direction: column;
@@ -83,4 +113,4 @@
     top: 0;
     left: 0;
   }
-}
+} */

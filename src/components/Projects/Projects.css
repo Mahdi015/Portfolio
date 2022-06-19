@@ -4,6 +4,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
 }
 
 .projects-header h2 {
@@ -12,12 +14,11 @@
   text-transform: 600;
   margin-top: 5px;
   margin-bottom: 10px;
-  color: white;
   text-transform: uppercase;
 }
 .projects-header span {
   font-weight: 600;
-  color: #ff4a57;
+  color: #EA7186;
 }
 .project-card-container {
   display: flex;
@@ -40,10 +41,11 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
   border-radius: 15px;
   box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);
-  background-color: #282c45;
+
 }
 .project-card img {
   width: 100%;
@@ -59,7 +61,7 @@
   font-size: 20px;
   line-height: 60px;
   height: 100%;
-  color: white;
+
 }
 .project-details {
   border-radius: 0 0 15px 15px;
@@ -77,17 +79,18 @@
   text-transform: capitalize;
   padding: 20px 20px;
   letter-spacing: 0.6px;
-  font-weight: 600;
-  background: #ff4a57;
+  font-weight: 500;
+  background: #7A77B9;
   line-height: 10px;
   border: none;
   border-radius: 4px;
-  transition: all 0.4s ease-in-out 0s;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
   margin-bottom: 10px;
 }
 .project-btton:hover {
-  background: white;
-  color: #ff4a57;
+  background: #7A77B9;
+  color: wheat;
 }
 @media screen and (max-width: 800px) {
   .project-card {

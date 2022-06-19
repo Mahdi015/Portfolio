@@ -4,9 +4,12 @@ import * as Scroll from "react-scroll";
 import { Link } from "react-scroll";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { Element } from "react-scroll";
-const Navbar = () => {
+import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
+
+const Navbar = ({ setTheme, theme }) => {
   const [ToggleMenu, setToggleMenu] = useState(false);
   const [navbar, setnavbar] = useState(false);
+
   const changeNavbarBg = () => {
     if (window.scrollY >= 90) {
       setnavbar(true);
@@ -15,6 +18,15 @@ const Navbar = () => {
     }
   };
   window.addEventListener("scroll", changeNavbarBg);
+  const handleToogler = () => {
+    theme == "light" ? setTheme("dark") : setTheme("light");
+  };
+  const onToggle = () => {
+    theme == "light" ? setTheme("dark") : setTheme("light");
+    setIsToggled(!isToggled);
+  };
+  const [isToggled, setIsToggled] = useState(false);
+
   const Menu = () => (
     <>
       <Link to="home" smooth={true} duration={800}>
@@ -40,6 +52,11 @@ const Navbar = () => {
       <Element id="nav" name="nav">
         <div>
           <div
+            style={
+              theme == "light"
+                ? { backgroundColor: "#EBE8E7" }
+                : { backgroundColor: "#1f2235" }
+            }
             className={navbar ? "portfolio-navbar active" : "portfolio-navbar"}
           >
             <div className="logo">
@@ -50,17 +67,35 @@ const Navbar = () => {
             <div className="portfolio-navbar-links">
               <Menu />
             </div>
+            <div className="themetogglecontainer">
+              <label for="checkbox" className="tegler">
+                <input
+                  type="checkbox"
+                  checked={isToggled}
+                  onChange={onToggle}
+                  id="checkbox"
+                />
+                <span className="ball"></span>
+                <span className="sun">
+                  {" "}
+                  <BsFillSunFill />
+                </span>
+                <span className="moon">
+                  <BsFillMoonFill />
+                </span>
+              </label>
+            </div>
             <div className="navbar-toggle">
               {ToggleMenu ? (
                 <RiCloseLine
                   color="#fff"
-                  size={27}
+                  size={35}
                   onClick={() => setToggleMenu(false)}
                 />
               ) : (
                 <RiMenu3Line
                   color="#fff"
-                  size={27}
+                  size={35}
                   onClick={() => setToggleMenu(true)}
                 />
               )}

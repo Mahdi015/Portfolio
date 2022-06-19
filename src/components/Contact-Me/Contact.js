@@ -4,7 +4,7 @@ import { Form, Row, Col, InputGroup, Button } from "react-bootstrap";
 import { Element } from "react-scroll";
 import toast from "react-hot-toast";
 
-const Contact = () => {
+const Contact = ({ theme }) => {
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -74,7 +74,11 @@ const Contact = () => {
       <Element id="contact" name="contact">
         <div className="portfolio-contact">
           <div className="contact-header">
-            <h2>
+            <h2
+              style={
+                theme == "light" ? { color: "#7A77B9" } : { color: "#fff" }
+              }
+            >
               Contact<span>Me</span>
             </h2>
             <div className="sm_border"></div>

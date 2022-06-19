@@ -9,12 +9,16 @@
   padding: 20px 160px;
   margin-right: auto;
   margin-left: auto;
-  transition: all 0.8s ease-in-out;
-  -webkit-transition: all 0.8s ease-in-out;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
   top: 0;
 }
+.portfolio-navbar-links{
+  display: flex;
+  align-items: center;
+}
 .portfolio-navbar.active {
-  background-color: #1f2235;
+  background-color: #EBE8E7;
   top: 0;
   position: fixed;
   box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.08);
@@ -25,13 +29,14 @@
   font-weight: 800;
   text-transform: uppercase;
   font-size: 30px;
-  color: #ff4a57;
+  color: #EA7186;
   padding: 15px;
   line-height: 50px;
   font-family: var(--font-family-logo);
+  cursor: pointer;
 }
 .portfolio-navbar .logo a:hover {
-  color: #ff4a57;
+  color: #EA7186;
   cursor: pointer;
 }
 .portfolio-navbar .portfolio-navbar-links a {
@@ -39,7 +44,7 @@
   font-weight: 600;
   font-size: 15px;
   padding: 20px;
-  color: white;
+  /* color: white; */
 }
 .portfolio-navbar .portfolio-navbar-links a:hover {
   cursor: pointer !important;
@@ -47,6 +52,10 @@
 }
 .navbar-toggle {
   display: none;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+ 
 }
 .navbar-toggle-container {
   position: absolute;
@@ -68,6 +77,50 @@
 .navbar-toggle-container a {
   margin-bottom: 5px;
 }
+#checkbox{
+display: none;
+}
+.tegler{
+  width: 60px;
+  height: 31px;
+  border: 2px solid #7A77B9;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+}
+.ball , .moon , .sun{
+  position: absolute;
+  transform: translateX(-50%);
+}
+.ball{
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-color: #7A77B9;
+  border-radius: 50%;
+  left: 11px;
+  z-index: 10;
+  bottom: 1px;
+  transition:  0.5s ease-in-out;
+  
+}
+.moon{
+  right: 0px;
+}
+.sun{
+  left: 12px;
+}
+#checkbox:checked +.ball{
+  transform: translate(21px,0%);
+}
+
+
+
+.themetogglecontainer{
+  flex: 0.2;
+  margin-right: 2rem;
+}
+
 @media screen and (max-width: 1120px) {
   .portfolio-navbar {
     padding: 20px 100px;
@@ -79,7 +132,7 @@
   }
 }
 
-@media screen and (max-width: 657px) {
+@media screen and (max-width: 775px) {
   .portfolio-navbar-links a {
     display: none;
   }
@@ -89,4 +142,6 @@
   .portfolio-navbar {
     padding: 20px;
   }
+
+
 }

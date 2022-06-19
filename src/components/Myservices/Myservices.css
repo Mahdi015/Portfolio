@@ -11,12 +11,11 @@
   text-transform: 600;
   margin-top: 5px;
   margin-bottom: 10px;
-  color: white;
-  text-transform: uppercase;
+  text-transform: uppercase; 
 }
 .myservices-header span {
   font-weight: 600;
-  color: #ff4a57;
+  color: #EA7186;
 }
 
 .myservices-card-container {
@@ -24,8 +23,8 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 5rem;
-  transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.5s linear;
+  -webkit-transition: all 0.5s linear;
 }
 .myservices-card {
   max-width: 310px;
@@ -40,25 +39,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: all 0.4s ease;
+  transition: all 0.5s linear;
   position: relative;
   top: 0;
 }
 .myservices-card h4 {
   white-space: nowrap;
-  color: white;
+
   font-size: 18px;
   margin: 17px 0;
   text-transform: uppercase;
   font-weight: 600;
-  transition: all 0.4s ease;
+  transition: all 0.5s linear;
 }
 .myservices-card span {
-  transition: all 0.4s ease;
+  transition: all 0.5s linear;
   font-weight: 500;
 
   font-size: 11px;
-  color: #ababab;
   text-align: center;
   height: 54px;
   line-height: 20px;
@@ -72,11 +70,11 @@
   width: 50px;
   height: 50px;
   text-align: center;
-  border: 1px solid #ff4a57;
+  border: 1px solid #EA7186;
   line-height: 50px;
-  color: #ff4a57;
+  color: #EA7186;
   display: inline-block;
-  transition: all 0.4s ease;
+  transition: all 0.5s linear;
   cursor: pointer;
 }
 .myservices-card i:hover {

@@ -7,7 +7,6 @@
   font-family: var(--font-family);
 }
 body {
-  background: var(--color-bg);
   letter-spacing: 0.5px;
 }
 .section_padding {
@@ -22,7 +21,7 @@ body {
   width: 70px;
   margin-bottom: 15px;
   bottom: -5px;
-  background-color: #ff4a57;
+  background-color: #EA7186;
   transform: translate(-50%, 0);
   position: relative;
   left: 50%;

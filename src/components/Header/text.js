@@ -11,10 +11,8 @@ const Text = () => {
     return () => clearTimeout(intervalId);
   }, []);
   return (
-    <h1 style={{ color: "white", fontSize: "35px" }}>
-      <span style={{ color: "white", fontWeight: 800, fontSize: "35px" }}>
-        I Am{"  "}
-      </span>
+    <h1 style={{ fontSize: "35px" }}>
+      <span style={{ fontWeight: 800, fontSize: "35px" }}>I Am{"  "}</span>
       <TextTransition
         text={TEXTS[index % TEXTS.length]}
         springConfig={presets.molasses}

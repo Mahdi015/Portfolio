@@ -6,7 +6,7 @@ import covid from "./covid-project.PNG";
 import ilias from "./ilias.png";
 import { Element } from "react-scroll";
 import { useInView } from "react-intersection-observer";
-const Projects = () => {
+const Projects = ({ theme }) => {
   const [ref, inView] = useInView({
     threshold: 0,
     triggerOnce: true,
@@ -16,12 +16,16 @@ const Projects = () => {
       <Element id="projects" name="projects">
         <div className="projects">
           <div className="projects-header">
-            <h2>
+            <h2
+              style={
+                theme == "light" ? { color: "#7A77B9" } : { color: "#fff" }
+              }
+            >
               My<span> Projects</span>
             </h2>
             <div className="sm_border"></div>
           </div>
-          <p
+          {/* <p
             style={{
               display: "flex",
               justifyContent: "center",
@@ -33,12 +37,19 @@ const Projects = () => {
             }}
           >
             Live demo not working on some projects will be fixed soon
-          </p>
+          </p> */}
           <div
             ref={ref}
             className={inView ? "project-card-container fade-in" : "displayoff"}
           >
-            <div className="project-card ">
+            <div
+              style={
+                theme == "light"
+                  ? { backgroundColor: "#E3E2DF", borderColor: "#7A77B9" }
+                  : { backgroundColor: "#1f2235" }
+              }
+              className="project-card "
+            >
               {" "}
               <img src={test} />
               <div className="project-details">
@@ -52,7 +63,14 @@ const Projects = () => {
                 Live Demo
               </a>
             </div>
-            <div className="project-card">
+            <div
+              style={
+                theme == "light"
+                  ? { backgroundColor: "#E3E2DF", borderColor: "#7A77B9" }
+                  : { backgroundColor: "#1f2235" }
+              }
+              className="project-card"
+            >
               <img src={covid} />
               <div className="project-details">
                 <p>COVID-19 Dashboard</p>
@@ -65,7 +83,14 @@ const Projects = () => {
                 Live Demo
               </a>
             </div>
-            <div className="project-card">
+            <div
+              style={
+                theme == "light"
+                  ? { backgroundColor: "#E3E2DF", borderColor: "#7A77B9" }
+                  : { backgroundColor: "#1f2235" }
+              }
+              className="project-card"
+            >
               <img src={ilias} />
               <div className="project-details">
                 <p>E-commerce Website</p>

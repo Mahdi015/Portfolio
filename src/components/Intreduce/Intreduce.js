@@ -2,11 +2,11 @@ import React, { useRef, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import "./Intreduce.css";
 // import ena from "./ena1.png";
-import ena from "./me-light.webp";
+import ena from "./3dchar.png";
 import cv from "./Resume.pdf";
 
 import { Element } from "react-scroll";
-const Intreduce = () => {
+const Intreduce = ({ theme }) => {
   const [ref1, inView1] = useInView({
     threshold: 0,
     triggerOnce: true,
@@ -57,7 +57,7 @@ const Intreduce = () => {
                 <span>Adresse :</span>Tunisia, Sfax
               </div>
               <div className="ct-about">
-                <span>Phone Number :</span>(+216)22 890 202
+                <span>Phone Number :</span>(+216) 22 890 202
               </div>
               <div className="ct-about">
                 <span>Email :</span>ferianimahdi93@gmail.com

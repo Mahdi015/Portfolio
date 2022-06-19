@@ -1,10 +1,13 @@
 import React from "react";
 import ena from "./test.png";
+import enanobg from "./enanobg.png";
+import Spline from "@splinetool/react-spline";
+
 import "./Header.css";
 import Text from "./text";
 import { Element } from "react-scroll";
 
-const Header = () => {
+const Header = ({ theme }) => {
   return (
     <>
       <Element id="home" name="home">
@@ -12,7 +15,7 @@ const Header = () => {
           <div className="portfolio-header">
             <h2
               style={{
-                color: "#FF4A57",
+                color: "#EA7186",
                 fontWeight: 900,
                 fontSize: "25px",
                 textTransform: "uppercase",
@@ -76,8 +79,21 @@ const Header = () => {
               </ul>
             </div>
           </div>
-          <div className="portfolio-header-img">
-            <img alt="img" src={ena} />
+          {/* <div className="portfolio-header-img">
+            <img alt="img" src={enanobg} />
+            
+          </div> */}
+
+          {/* <Spline
+            style={{ marginTop: "-20px", width: "100%" }}
+            scene="https://prod.spline.design/JP9IYZ0pGAh2s9AL/scene.splinecode"
+          /> */}
+
+          <div className="cotainer3d">
+            <Spline
+              style={{ marginTop: "-40px", width: "100%" }}
+              scene="https://prod.spline.design/YxeN0-Yas1E2CsYI/scene.splinecode"
+            />
           </div>
         </div>
       </Element>
