@@ -1,7 +1,6 @@
 import React from "react";
 import "./Projects.css";
 import test from "./1.PNG";
-import noimg from "./noimg.png";
 import covid from "./covid-project.PNG";
 import ilias from "./ilias.png";
 import { Element } from "react-scroll";

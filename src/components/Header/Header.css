@@ -1,6 +1,6 @@
 .portfolio-container {
-  margin: 12rem 0 0 0;
-  padding: 4rem 110px 4rem 175px;
+  margin: 8rem 0 0 0;
+  padding: 4rem 110px 3.5rem 175px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -28,14 +28,13 @@
 }
 .portfolio-header-img {
   position: relative;
-  left: -15%;
-  top: -50px;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
+  margin-top: -3rem;
 }
 .portfolio-header-img img {
-  width: 500px;
-  height: 370px;
+  width: 520px;
+  height: 380px;
 }
 .portfolio-social {
   margin: 25px 0 10px;

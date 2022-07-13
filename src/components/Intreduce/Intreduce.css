@@ -98,6 +98,64 @@
   animation: slide-in-blurred-left 1.5s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
+.carousel {
+  z-index: 3;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.08),-1px -2px 3px rgba(0, 0, 0, 0.08);
+}
+
+.carousel__slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 150px;
+}
+
+.carousel__list {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.carousel__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.carousel__item img{
+  width:120px;
+  height: 80px;
+}
+
+.carousel__item:hover {
+  transform: scale(1.1);
+  font-size: 30px;
+
+}
+
+.carousel-fade{
+  background: linear-gradient(to right, rgba(22, 26, 43, 1) 0%, rgba(22, 26, 43, .01) 20%, rgba(22, 26, 43, .01) 80%, rgba(22, 26, 43, 1) 100%);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 5;
+}
 @-webkit-keyframes slide-in-blurred-left {
   0% {
     -webkit-transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);

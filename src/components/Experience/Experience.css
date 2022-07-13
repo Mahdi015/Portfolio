@@ -35,7 +35,7 @@
   position: relative;
   transition: all 0.5s linear;
   -webkit-transition: all 0.5s linear;
- 
+ border: 1.5px solid #333;
 }
 .line {
   content: "";

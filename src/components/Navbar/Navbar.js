@@ -29,17 +29,22 @@ const Navbar = ({ setTheme, theme }) => {
 
   const Menu = () => (
     <>
-      <Link to="home" smooth={true} duration={800}>
-        Home
+      <Link to="about" smooth={true} offset={-110} duration={800}>
+        Who am I
       </Link>
-
-      <Link to="about" smooth={true} duration={800}>
-        About
-      </Link>
-      <Link to="services" smooth={true} duration={800}>
+      <Link to="services" smooth={true} offset={-200} duration={800}>
         Services
       </Link>
-      <Link to="projects" smooth={true} duration={800}>
+      <Link to="experience" smooth={true} offset={-120} duration={800}>
+        Experience
+      </Link>
+      <Link
+        to="projects"
+        smooth={true}
+        duration={800}
+        offset={-80}
+        isDynamic={true}
+      >
         Projects
       </Link>
       <Link to="contact" smooth={true} duration={800}>
@@ -55,7 +60,7 @@ const Navbar = ({ setTheme, theme }) => {
             style={
               theme == "light"
                 ? { backgroundColor: "#EBE8E7" }
-                : { backgroundColor: "#1f2235" }
+                : { backgroundColor: "#161A2B" }
             }
             className={navbar ? "portfolio-navbar active" : "portfolio-navbar"}
           >

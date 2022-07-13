@@ -1,11 +1,11 @@
-import React, { useRef, useCallback } from "react";
+import React from "react";
 import { useInView } from "react-intersection-observer";
 import "./Intreduce.css";
-// import ena from "./ena1.png";
 import ena from "./3dchar.png";
-import cv from "./CV.pdf";
 
+import cv from "./CV.pdf";
 import { Element } from "react-scroll";
+
 const Intreduce = ({ theme }) => {
   const [ref1, inView1] = useInView({
     threshold: 0,
