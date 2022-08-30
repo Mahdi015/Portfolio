@@ -1,10 +1,10 @@
 import React from "react";
 import { useInView } from "react-intersection-observer";
 import "./Intreduce.css";
-import ena from "./3dchar.png";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import cv from "./CV.pdf";
 import { Element } from "react-scroll";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Intreduce = ({ theme }) => {
   const [ref1, inView1] = useInView({
@@ -27,7 +27,12 @@ const Intreduce = ({ theme }) => {
                 inView1 ? "intreduce-img slide-in-blurred-left" : "displayoff"
               }
             >
-              <img src={ena} />
+              <LazyLoadImage
+                effect="blur"
+                src={
+                  "https://res.cloudinary.com/ds5eqdcxk/image/upload/v1661893169/3dchar_cfepdx.png"
+                }
+              />
             </div>
           }
 
@@ -63,8 +68,13 @@ const Intreduce = ({ theme }) => {
                 <span>Email :</span>ferianimahdi93@gmail.com
               </div>
             </div>
-            <a className="cv-btton" download href={cv}>
-              Download Cv
+            <a
+              className="cv-btton"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={cv}
+            >
+              View Cv
             </a>
           </div>
         </div>

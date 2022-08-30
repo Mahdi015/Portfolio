@@ -24,31 +24,11 @@ const Projects = ({ theme }) => {
             </h2>
             <div className="sm_border"></div>
           </div>
-          {/* <p
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center ",
-              fontSize: "11px",
-              color: "white",
-              fontWeight: "500",
-              marginTop: "1rem",
-            }}
-          >
-            Live demo not working on some projects will be fixed soon
-          </p> */}
           <div
             ref={ref}
             className={inView ? "project-card-container fade-in" : "displayoff"}
           >
-            <div
-              style={
-                theme == "light"
-                  ? { backgroundColor: "#E3E2DF", borderColor: "#7A77B9" }
-                  : { backgroundColor: "#1f2235" }
-              }
-              className="project-card "
-            >
+            <div className="project-card ">
               {" "}
               <img src={test} />
               <div className="project-details">
@@ -62,14 +42,7 @@ const Projects = ({ theme }) => {
                 Live Demo
               </a>
             </div>
-            <div
-              style={
-                theme == "light"
-                  ? { backgroundColor: "#E3E2DF", borderColor: "#7A77B9" }
-                  : { backgroundColor: "#1f2235" }
-              }
-              className="project-card"
-            >
+            <div className="project-card">
               <img src={covid} />
               <div className="project-details">
                 <p>COVID-19 Dashboard</p>
@@ -82,14 +55,7 @@ const Projects = ({ theme }) => {
                 Live Demo
               </a>
             </div>
-            <div
-              style={
-                theme == "light"
-                  ? { backgroundColor: "#E3E2DF", borderColor: "#7A77B9" }
-                  : { backgroundColor: "#1f2235" }
-              }
-              className="project-card"
-            >
+            <div className="project-card">
               <img src={ilias} />
               <div className="project-details">
                 <p>E-commerce Website</p>

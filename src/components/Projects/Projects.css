@@ -29,7 +29,7 @@
   margin-left: 30px;
 }
 .project-card {
-  border: 1px solid #181b26;
+  /* border: 1px solid #181b26; */
   max-width: 310px;
   min-width: 250px;
   min-height: 250px;
@@ -43,9 +43,16 @@
   align-items: center;
   transition: all 0.5s linear;
   -webkit-transition: all 0.5s linear;
-  border-radius: 15px;
-  box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);
+  /* border-radius: 15px;
+  box-shadow: 0 10px 10px rgb(0 0 0 / 0.2); */
 
+
+  background: linear-gradient(135deg, rgba(255,255,255,0.1),rgba(255,255,255,0));
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
+  border: 1px solid rgba(255,255,255,0,18);
+  border-radius: 32px;
 }
 .project-card img {
   width: 100%;
