@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./Header.css";
 import Text from "./text";
 import { Element } from "react-scroll";
-
+import img from "./p1_czseo7-min.png";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -81,12 +81,7 @@ const Header = ({ theme }) => {
 
           <div className="portfolio-header-img">
             {/* <img alt="img" src={"https://res.cloudinary.com/ds5eqdcxk/image/upload/v1661883684/p1_czseo7.png"} /> */}
-            <LazyLoadImage
-              effect="blur"
-              src={
-                "https://res.cloudinary.com/ds5eqdcxk/image/upload/v1661883684/p1_czseo7.png"
-              }
-            />
+            <LazyLoadImage effect="blur" src={img} />
           </div>
         </div>
       </Element>
