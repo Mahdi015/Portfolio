@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Mahdi Feriani — Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Modern portfolio built with **Next.js 15**, **React 19**, **TypeScript**, and the App Router.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+```bash
+npm install
+npm run dev
+```
 
-### `npm start`
+Open [http://localhost:3000](http://localhost:3000).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Scripts
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
 
-### `npm test`
+## Contact Form
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The contact form uses [Web3Forms](https://web3forms.com) (client-side, free plan).
 
-### `npm run build`
+Add to `.env.local`:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=your_access_key_here
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Content Updates
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Portfolio content lives in `data/portfolio.ts` — update experience, projects, skills, and bio there.
 
-### `npm run eject`
+## Deploy to Netlify
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Push your changes to GitHub (`main` or your deploy branch).
+2. In Netlify, open your site → **Site configuration** → **Build & deploy**.
+3. Confirm settings:
+   - **Build command:** `npm run build`
+   - **Publish directory:** leave empty (Netlify auto-detects Next.js)
+   - **Node version:** 20+ (set in **Environment variables** as `NODE_VERSION=20` if needed)
+4. Add **Environment variables:**
+   - `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` = your Web3Forms key
+5. Trigger **Deploy site** (or wait for auto-deploy after push).
+6. After deploy, verify:
+   - `https://mahdiferiani.netlify.app/`
+   - `https://mahdiferiani.netlify.app/projects/msafer`
+   - `https://mahdiferiani.netlify.app/projects/ilias-shop`
+   - Contact form submission

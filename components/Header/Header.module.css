@@ -1,0 +1,212 @@
+.container {
+  margin: 8rem 0 0;
+  padding: 4rem 60px 5.5rem 175px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2.5rem;
+  overflow: visible;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.greeting {
+  color: var(--color-accent);
+  font-weight: 900;
+  font-size: 25px;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 1rem 0;
+  font-size: 35px;
+}
+
+.title span:first-child {
+  font-weight: 800;
+}
+
+.role {
+  display: inline-block;
+  animation: role-fade 0.6s ease;
+}
+
+@keyframes role-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bio {
+  margin-top: 0.7rem;
+  font-weight: 500;
+  font-size: 16px;
+  max-width: 70%;
+  line-height: 26px;
+}
+
+.social {
+  margin: 25px 0 10px;
+  display: flex;
+  gap: 12px;
+}
+
+.social a {
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  color: var(--color-accent);
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s;
+}
+
+.social a:hover {
+  color: white;
+  background-color: var(--color-accent);
+}
+
+.imageWrapper {
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: -2.5rem;
+  padding: 2.5rem;
+  overflow: visible;
+  transform: translateX(-28px);
+}
+
+.imageFrame {
+  position: relative;
+  z-index: 1;
+  padding: 3px;
+  border-radius: 32px;
+  background: linear-gradient(
+    145deg,
+    rgba(234, 113, 134, 0.85) 0%,
+    rgba(122, 119, 185, 0.9) 55%,
+    rgba(234, 113, 134, 0.85) 100%
+  );
+  box-shadow:
+    0 28px 56px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.imageGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 35% 25%, var(--color-accent) 0%, transparent 58%),
+    radial-gradient(circle at 65% 75%, var(--color-primary) 0%, transparent 52%);
+  opacity: 0.38;
+  filter: blur(52px);
+  pointer-events: none;
+}
+
+.imageInner {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 29px;
+  padding: 14px;
+  background: linear-gradient(
+    180deg,
+    #1a1e30 0%,
+    #12151f 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.imageInner::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 20px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+:global(html[data-theme="light"]) .imageFrame {
+  box-shadow:
+    0 24px 48px rgba(122, 119, 185, 0.22),
+    0 0 0 1px rgba(122, 119, 185, 0.1) inset;
+}
+
+:global(html[data-theme="light"]) .imageGlow {
+  opacity: 0.26;
+}
+
+:global(html[data-theme="light"]) .imageInner {
+  background: linear-gradient(
+    180deg,
+    #ece9e8 0%,
+    #e0dedb 100%
+  );
+  border-color: rgba(122, 119, 185, 0.12);
+}
+
+:global(html[data-theme="light"]) .imageInner::after {
+  background: linear-gradient(
+    180deg,
+    transparent 45%,
+    rgba(122, 119, 185, 0.12) 100%
+  );
+}
+
+@media screen and (max-width: 1120px) {
+  .container {
+    padding: 2rem 1.5rem 4rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content {
+    padding: 0 1rem;
+  }
+
+  .bio {
+    max-width: 90%;
+  }
+
+  .imageWrapper {
+    margin: 1.5rem 0 0;
+    padding: 2rem;
+    transform: none;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .image {
+    max-width: 100%;
+  }
+}

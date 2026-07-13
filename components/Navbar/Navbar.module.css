@@ -1,0 +1,151 @@
+.navbar {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  z-index: 999;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 160px;
+  transition: all 0.5s linear;
+  top: 0;
+}
+
+.navbar.active {
+  position: fixed;
+  top: 0;
+  box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+.logo a {
+  text-decoration: none;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 30px;
+  color: var(--color-accent);
+  padding: 15px;
+  line-height: 50px;
+  font-family: var(--font-roboto), "Roboto", sans-serif;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+}
+
+.links a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 20px;
+}
+
+.links a:hover {
+  color: #9399c0;
+}
+
+.themeToggle {
+  margin-right: 2rem;
+}
+
+.toggleLabel {
+  width: 60px;
+  height: 31px;
+  border: 2px solid var(--color-primary);
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+
+.toggleLabel input {
+  display: none;
+}
+
+.ball,
+.moon,
+.sun {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.ball {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  left: 11px;
+  z-index: 10;
+  bottom: 1px;
+  transition: 0.5s ease-in-out;
+}
+
+.moon {
+  right: -2px;
+  top: 2px;
+}
+
+.sun {
+  left: 12px;
+  top: 2px;
+}
+
+.toggleLabel input:checked + .ball {
+  transform: translate(21px, 0%);
+}
+
+.menuButton {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.mobileMenu {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: #000;
+  margin-top: 1.5rem;
+  top: 60px;
+  right: 20px;
+  box-shadow: -1px 1px 1px rgb(20 97 255 / 10%);
+}
+
+.mobileMenu a {
+  margin-bottom: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 1120px) {
+  .navbar {
+    padding: 20px 100px;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .navbar {
+    padding: 20px 45px;
+  }
+}
+
+@media screen and (max-width: 775px) {
+  .links {
+    display: none;
+  }
+
+  .menuButton {
+    display: block;
+  }
+
+  .mobileMenu {
+    display: flex;
+  }
+
+  .navbar {
+    padding: 20px;
+  }
+}

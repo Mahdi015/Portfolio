@@ -1,0 +1,124 @@
+.carousel {
+  --skill-gap: clamp(4rem, 12vw, 8rem);
+
+  position: relative;
+  overflow: hidden;
+  margin-top: 1.5rem;
+  box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.08), -1px -2px 3px rgba(0, 0, 0, 0.08);
+}
+
+.track {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.scroll {
+  display: flex;
+  width: max-content;
+  animation: scroll 45s linear infinite;
+  will-change: transform;
+}
+
+.track:hover .scroll {
+  animation-play-state: paused;
+}
+
+.set {
+  display: flex;
+  align-items: center;
+  gap: var(--skill-gap);
+  padding-right: var(--skill-gap);
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 150px;
+  height: 80px;
+  transition: transform 0.2s ease;
+}
+
+.item:hover {
+  transform: scale(1.1);
+}
+
+.logo {
+  width: auto;
+  height: auto;
+  max-width: 120px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.fade {
+  background: linear-gradient(
+    to right,
+    var(--color-bg) 0%,
+    transparent 15%,
+    transparent 85%,
+    var(--color-bg) 100%
+  );
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 0.5s linear, visibility 0.5s linear;
+}
+
+:global(html[data-theme="light"]) .fade {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@keyframes scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .duplicate {
+    display: none;
+  }
+
+  .scroll {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+    will-change: auto;
+  }
+
+  .set {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .item {
+    min-width: 120px;
+  }
+
+  .track {
+    height: auto;
+    min-height: 150px;
+    padding: 1rem 0;
+  }
+}
