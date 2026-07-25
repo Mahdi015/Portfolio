@@ -96,17 +96,17 @@ export const services: Service[] = [
 
 export const education: TimelineItem[] = [
   {
-    period: "2019 – 2021",
+    period: "2022 – 2025",
     title: "Computer Engineering",
     subtitle: "Polytechnique IPSAS, Sfax, Tunisia",
   },
   {
-    period: "2016 – 2019",
+    period: "2019 – 2021",
     title: "Bachelor's Degree in Computer Science",
     subtitle: "ISIMA, Mahdia, Tunisia",
   },
   {
-    period: "2014 – 2016",
+    period: "2014 – 2018",
     title: "High School",
     subtitle: "Mongi Slim School Secondary",
   },

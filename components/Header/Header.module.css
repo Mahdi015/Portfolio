@@ -95,12 +95,7 @@
   z-index: 1;
   padding: 3px;
   border-radius: 32px;
-  background: linear-gradient(
-    145deg,
-    rgba(234, 113, 134, 0.85) 0%,
-    rgba(122, 119, 185, 0.9) 55%,
-    rgba(234, 113, 134, 0.85) 100%
-  );
+  background: color-mix(in srgb, var(--color-accent) 65%, transparent);
   box-shadow:
     0 28px 56px rgba(0, 0, 0, 0.45),
     0 0 0 1px rgba(255, 255, 255, 0.04) inset;
@@ -110,11 +105,14 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    radial-gradient(circle at 35% 25%, var(--color-accent) 0%, transparent 58%),
-    radial-gradient(circle at 65% 75%, var(--color-primary) 0%, transparent 52%);
-  opacity: 0.38;
-  filter: blur(52px);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(148, 163, 184, 0.42) 0%,
+    rgba(30, 41, 59, 0.2) 48%,
+    transparent 72%
+  );
+  opacity: 0.32;
+  filter: blur(46px);
   pointer-events: none;
 }
 
@@ -158,12 +156,18 @@
 
 :global(html[data-theme="light"]) .imageFrame {
   box-shadow:
-    0 24px 48px rgba(122, 119, 185, 0.22),
-    0 0 0 1px rgba(122, 119, 185, 0.1) inset;
+    0 24px 48px rgba(30, 41, 59, 0.16),
+    0 0 0 1px rgba(30, 41, 59, 0.08) inset;
 }
 
 :global(html[data-theme="light"]) .imageGlow {
-  opacity: 0.26;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(71, 85, 105, 0.28) 0%,
+    rgba(100, 116, 139, 0.12) 48%,
+    transparent 72%
+  );
+  opacity: 0.24;
 }
 
 :global(html[data-theme="light"]) .imageInner {
