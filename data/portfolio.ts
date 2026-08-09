@@ -25,7 +25,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: "GitHub",
-    href: "https://github.com/Mahdiferiani",
+    href: "https://github.com/Mahdi015",
     icon: "github",
   }
 ];
@@ -154,12 +154,60 @@ export const projects: Project[] = [
     ],
   },
   {
-    title: "Enterprise Platform",
-    subtitle: "Tekab Dev — Vue.js & NestJS",
+    title: "Adopti.tn",
+    slug: "adopti",
+    subtitle: "Pet Adoption Platform — Tunisia",
+    company: "Personal Project",
+    location: "Tunisia",
     description:
-      "Enterprise web platform serving 10,000+ users with RESTful APIs, authentication, SurveyJS dynamic forms, and multilingual workflows.",
-    image: "/images/projects/placeholder.svg",
-    demoUrl: null,
+      "Full-stack pet adoption platform for Tunisia. Users post pets, admins moderate listings, adopters request homes, and chat unlocks after acceptance. Built with Next.js 15, NestJS, Prisma, and PostgreSQL in a Turborepo monorepo.",
+    image: "/images/projects/adopti.png",
+    demoUrl: "https://adopti-tn-ashy.vercel.app/",
+    linkLabel: "View Live Demo",
+    galleryAspectRatio: "16 / 9",
+    galleryMaxWidth: "720px",
+    gallery: ["/images/projects/adopti/preview.png"],
+    highlights: [
+      "Built a Tunisia-focused pet adoption platform that replaces scattered social posts with a moderated workflow: list a pet, get admin approval, receive requests, then unlock chat once accepted.",
+      "Shipped end-to-end product features including browse/filter, pet detail pages, listings management, favorites, adoption requests, profiles, and email verification / password reset auth.",
+      "Implemented an admin dashboard for listing moderation (approve/decline), user/request management, and platform stats.",
+      "Architected a TypeScript Turborepo monorepo with Next.js 15, NestJS 11, Prisma/PostgreSQL, Better Auth (httpOnly cookies), shared Zod contracts, Cloudinary media, and Resend email.",
+    ],
+  },
+  {
+    title: "FrameFind",
+    slug: "framefind",
+    subtitle: "AI B-Roll Asset Search",
+    company: "Open Source",
+    description:
+      "Open-source AI tool that turns a video script into ranked B-roll photos and videos from stock libraries and optional social platforms.",
+    image: "/images/projects/framefind.png",
+    demoUrl: "https://github.com/Mahdi015/FrameFind",
+    linkLabel: "View on GitHub",
+    galleryAspectRatio: "16 / 9",
+    galleryMaxWidth: "720px",
+    gallery: ["/images/projects/framefind/preview.png"],
+    highlights: [
+      "Built a full-stack TypeScript monorepo with a Next.js frontend and NestJS API for script-to-visuals search.",
+      "Used Gemini/Groq to split narration into scenes, generate visual keywords, and rank B-roll matches by relevance.",
+      "Integrated a pluggable provider layer across 9 sources (stock libraries and optional social platforms) with rate limiting and quota-safe toggles.",
+      "Added filters for media type, orientation, and duration so creators can find usable photos and videos faster in one workflow.",
+    ],
+    quickStart: {
+      steps: [
+        "Clone the repo and install dependencies (Node.js 20+).",
+        "Copy the env examples, then add at least a Gemini or Groq key plus one stock API key (e.g. Pexels).",
+        "Run the app, open the UI, paste a script, and hit Analyze script to get scenes + ranked B-roll.",
+      ],
+      commands: [
+        "git clone https://github.com/Mahdi015/FrameFind.git",
+        "cd FrameFind && npm install",
+        "cp apps/backend/.env.example apps/backend/.env",
+        "cp apps/frontend/.env.example apps/frontend/.env.local",
+        "npm run dev",
+      ],
+      note: "Frontend: http://localhost:3000 · Backend: http://localhost:3001",
+    },
   },
   {
     title: "Ilias Shop",

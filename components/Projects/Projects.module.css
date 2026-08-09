@@ -38,6 +38,12 @@
   transform: scale(1.05);
 }
 
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 .image {
   width: 100%;
   height: auto;

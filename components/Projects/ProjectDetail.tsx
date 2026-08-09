@@ -79,6 +79,25 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
           </section>
         )}
 
+        {project.quickStart && (
+          <section className={styles.highlights}>
+            <h2>Quick start</h2>
+            <ul>
+              {project.quickStart.steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ul>
+            {project.quickStart.commands && project.quickStart.commands.length > 0 && (
+              <pre className={styles.codeBlock}>
+                <code>{project.quickStart.commands.join("\n")}</code>
+              </pre>
+            )}
+            {project.quickStart.note && (
+              <p className={styles.quickStartNote}>{project.quickStart.note}</p>
+            )}
+          </section>
+        )}
+
         {project.demoUrl && (
           <div className={styles.actions}>
             <a

@@ -1,10 +1,10 @@
 .container {
-  margin: 8rem 0 0;
-  padding: 4rem 60px 5.5rem 175px;
+  margin: 5.5rem 0 0;
+  padding: 1.75rem 60px 2rem 175px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
   overflow: visible;
 }
 
@@ -18,13 +18,13 @@
 .greeting {
   color: var(--color-accent);
   font-weight: 900;
-  font-size: 25px;
+  font-size: 22px;
   text-transform: uppercase;
 }
 
 .title {
-  margin: 1rem 0;
-  font-size: 35px;
+  margin: 0.6rem 0;
+  font-size: 32px;
 }
 
 .title span:first-child {
@@ -48,15 +48,15 @@
 }
 
 .bio {
-  margin-top: 0.7rem;
+  margin-top: 0.4rem;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 15px;
   max-width: 70%;
-  line-height: 26px;
+  line-height: 24px;
 }
 
 .social {
-  margin: 25px 0 10px;
+  margin: 18px 0 0;
   display: flex;
   gap: 12px;
 }
@@ -82,10 +82,10 @@
 .imageWrapper {
   position: relative;
   flex-shrink: 0;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
   margin-left: -2.5rem;
-  padding: 2.5rem;
+  padding: 1.25rem;
   overflow: visible;
   transform: translateX(-28px);
 }
@@ -121,7 +121,7 @@
   z-index: 1;
   overflow: hidden;
   border-radius: 29px;
-  padding: 14px;
+  padding: 10px;
   background: linear-gradient(
     180deg,
     #1a1e30 0%,
@@ -133,7 +133,7 @@
 .imageInner::after {
   content: "";
   position: absolute;
-  inset: 14px;
+  inset: 10px;
   border-radius: 20px;
   pointer-events: none;
   background: linear-gradient(
@@ -148,7 +148,7 @@
   z-index: 1;
   display: block;
   width: 100%;
-  max-width: 480px;
+  max-width: 360px;
   height: auto;
   border-radius: 20px;
   object-fit: cover;
@@ -189,7 +189,8 @@
 
 @media screen and (max-width: 1120px) {
   .container {
-    padding: 2rem 1.5rem 4rem;
+    margin-top: 5rem;
+    padding: 1.5rem 1.5rem 2rem;
     flex-direction: column;
     align-items: center;
   }
@@ -203,11 +204,11 @@
   }
 
   .imageWrapper {
-    margin: 1.5rem 0 0;
-    padding: 2rem;
+    margin: 1rem 0 0;
+    padding: 1.25rem;
     transform: none;
     width: 100%;
-    max-width: 420px;
+    max-width: 340px;
   }
 
   .image {

@@ -21,13 +21,14 @@ export default function Projects() {
       >
         {projects.map((project) => {
           const showDetailPage = hasProjectDetail(project);
+          const detailHref =
+            showDetailPage && project.slug
+              ? `/projects/${project.slug}`
+              : null;
 
-          return (
-          <article key={project.title} className={styles.card}>
-            {project.imageStyle === "iconBackground" ? (
-              <div
-                className={styles.iconBanner}
-              >
+          const media =
+            project.imageStyle === "iconBackground" ? (
+              <div className={styles.iconBanner}>
                 <div className={styles.iconBannerOverlay} />
                 <Image
                   src={project.image}
@@ -45,23 +46,40 @@ export default function Projects() {
                 height={200}
                 className={styles.image}
               />
-            )}
+            );
 
-            <div className={styles.details}>
-              <h3>{project.title}</h3>
-              {project.subtitle && (
-                <p className={styles.subtitle}>{project.subtitle}</p>
-              )}
-              {project.description && (
-                <p className={styles.description}>{project.description}</p>
-              )}
-            </div>
-            {showDetailPage && project.slug ? (
-              <Link href={`/projects/${project.slug}`} className={styles.button}>
-                View Project
+          const body = (
+            <>
+              {media}
+              <div className={styles.details}>
+                <h3>{project.title}</h3>
+                {project.subtitle && (
+                  <p className={styles.subtitle}>{project.subtitle}</p>
+                )}
+                {project.description && (
+                  <p className={styles.description}>{project.description}</p>
+                )}
+              </div>
+            </>
+          );
+
+          if (detailHref) {
+            return (
+              <Link
+                key={project.title}
+                href={detailHref}
+                className={`${styles.card} ${styles.cardLink}`}
+              >
+                {body}
+                <span className={styles.button}>View Project</span>
               </Link>
-            ) : (
-              project.demoUrl && (
+            );
+          }
+
+          return (
+            <article key={project.title} className={styles.card}>
+              {body}
+              {project.demoUrl && (
                 <a
                   href={project.demoUrl}
                   target="_blank"
@@ -70,10 +88,9 @@ export default function Projects() {
                 >
                   {project.linkLabel ?? "Live Demo"}
                 </a>
-              )
-            )}
-          </article>
-        );
+              )}
+            </article>
+          );
         })}
       </div>
     </section>

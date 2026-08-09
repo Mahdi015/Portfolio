@@ -52,6 +52,11 @@ export interface Project {
   company?: string;
   location?: string;
   highlights?: string[];
+  quickStart?: {
+    steps: string[];
+    commands?: string[];
+    note?: string;
+  };
   gallery?: string[];
   galleryAspectRatio?: string;
   galleryMaxWidth?: string;
