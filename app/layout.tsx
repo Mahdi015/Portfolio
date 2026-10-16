@@ -41,6 +41,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: siteConfig.title,
   description: siteConfig.description,
+  /**
+   * The one URL this page wants to be known by. Without it the homepage is
+   * reachable as several distinct URLs — with and without a trailing slash,
+   * and under every Netlify deploy-preview and branch subdomain — and each is
+   * a separate candidate competing with the others for the same content.
+   */
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "Mahdi Feriani",
     "Full-Stack Engineer",

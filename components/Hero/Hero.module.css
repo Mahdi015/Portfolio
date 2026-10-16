@@ -113,6 +113,16 @@
   min-height: 0;
 }
 
+/* Dissolves into .stage's flex row, so the heading is structure only and
+   carries no box of its own — the two name spans stay the flex items they
+   were. font/margin are neutralised because a UA h1 brings its own. */
+.wordmark {
+  display: contents;
+  font: inherit;
+  margin: 0;
+  letter-spacing: inherit;
+}
+
 .name {
   position: relative;
   z-index: 1;

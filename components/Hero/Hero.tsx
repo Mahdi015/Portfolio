@@ -100,12 +100,27 @@ export default function Hero() {
           </motion.div>
 
           <div className={styles.stage}>
-            <motion.span
-              className={`${styles.name} ${styles.nameFirst}`}
-              style={motionStyle({ x: firstX, opacity: nameOpacity })}
-            >
-              {firstName}
-            </motion.span>
+            {/* The page's h1, and the reason it is wrapped rather than applied
+                to .stage: the two halves of the wordmark are the only text in
+                the heading. `display: contents` hands them straight back to
+                .stage's flex layout, so the markup gains a real heading
+                without the character — whose alt describes the portrait — or
+                the year landing inside the heading's accessible name. */}
+            <h1 className={styles.wordmark}>
+              <motion.span
+                className={`${styles.name} ${styles.nameFirst}`}
+                style={motionStyle({ x: firstX, opacity: nameOpacity })}
+              >
+                {firstName}
+              </motion.span>
+
+              <motion.span
+                className={`${styles.name} ${styles.nameLast}`}
+                style={motionStyle({ x: lastX, opacity: nameOpacity })}
+              >
+                {lastName}
+              </motion.span>
+            </h1>
 
             <motion.div
               className={styles.character}
@@ -133,13 +148,6 @@ export default function Hero() {
                 className={styles.characterImage}
               />
             </motion.div>
-
-            <motion.span
-              className={`${styles.name} ${styles.nameLast}`}
-              style={motionStyle({ x: lastX, opacity: nameOpacity })}
-            >
-              {lastName}
-            </motion.span>
 
             <span className={styles.year} aria-hidden="true">
               [ {heroContent.year} ]

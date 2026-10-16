@@ -24,6 +24,9 @@ export async function generateMetadata({
   return {
     title: `${project.title} | Mahdi Feriani`,
     description: project.description,
+    alternates: {
+      canonical: `/projects/${slug}`,
+    },
     openGraph: {
       title: `${project.title} | Mahdi Feriani`,
       description: project.description,
