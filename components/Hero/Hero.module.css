@@ -1,0 +1,534 @@
+/* ==========================================================================
+   CINEMATIC OPENER
+   Committed dark in both themes — it is a title card, not a page section.
+   ========================================================================== */
+
+/* These were the originals; the token file was built from them, and they now
+   read back out of it. Same pixels, one source — changing the palette in
+   globals.css now moves the hero with everything else instead of leaving it
+   behind as the one section with its own hexes. */
+.hero {
+  --h-bg: var(--band);
+  --h-ink: var(--band-ink);
+  --h-dim: var(--band-ink-2);
+  --h-line: var(--band-rule);
+  --h-accent: var(--band-accent-2);
+  --h-teal: var(--band-accent);
+}
+
+.cinematic {
+  position: relative;
+  background: var(--h-bg);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* The top pad is the navbar's reserved band — the bar is fixed, so nothing
+     else holds that space open. It reads the bar's measured height rather
+     than a clamp tuned to match it: the previous hand-tuned value cleared the
+     bar by only ~9px at 800px tall, which the chrome's own -18px scroll lift
+     then ate, and the tags slid up under the glass panel. --nav-gap is the
+     margin that lift now has to travel in. */
+  padding: calc(var(--nav-h) + var(--nav-gap)) var(--gutter)
+    clamp(1.25rem, 3vh, 2rem);
+  color: var(--h-ink);
+  isolation: isolate;
+}
+
+/* Inset hairline frame — the detail that makes it read as a title card. */
+.frame {
+  position: absolute;
+  inset: clamp(0.5rem, 1.2vw, 1rem);
+  border: 1px solid var(--h-line);
+  border-radius: clamp(12px, 1.6vw, 22px);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* --- top chrome --- */
+
+.chromeTop {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-4);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.tags li {
+  padding: 6px 13px;
+  border: 1px solid var(--h-line);
+  border-radius: var(--r-pill);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--h-dim);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--h-dim);
+}
+
+.status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--h-teal);
+  box-shadow: 0 0 10px var(--h-teal);
+}
+
+/* --- the stage: names apart, character between --- */
+
+.stage {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  min-height: 0;
+}
+
+.name {
+  position: relative;
+  z-index: 1;
+  font-family: var(--sans);
+  font-weight: 800;
+  /* The site's one display size, and the only thing that reads it. */
+  font-size: var(--fs-display);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--h-ink);
+  /* A soft sheen so the type feels lit by the same scene as the character. */
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffffff 58%,
+    color-mix(in srgb, var(--h-ink) 72%, transparent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  will-change: transform, opacity;
+}
+
+.nameFirst {
+  text-align: left;
+}
+
+.nameLast {
+  text-align: right;
+}
+
+/* --- character --- */
+
+.character {
+  position: absolute;
+  left: 50%;
+  /* Lifted off the floor of the frame. Kept as `bottom` rather than folded
+     into the transform: the transform carries the scroll-driven scale, whose
+     origin is 50% 100%, so a translate there would be scaled along with it
+     and the lift would drift as you scroll. */
+  bottom: clamp(1rem, 3.5vh, 2.5rem);
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  transform-origin: 50% 100%;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.characterGlow {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 150%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--h-accent) 42%, transparent) 0%,
+    color-mix(in srgb, var(--h-teal) 14%, transparent) 42%,
+    transparent 68%
+  );
+  filter: blur(34px);
+  z-index: -1;
+}
+
+.characterImage {
+  position: relative;
+  display: block;
+  width: auto;
+  height: 100%;
+  max-height: min(62vh, 530px);
+  /* Kept above height x 0.79 (the file's aspect): the character is padded to
+     put its head on the centre axis, so the file is wider than the figure,
+     and too tight a cap here makes width the binding constraint and silently
+     costs render height instead. */
+  max-width: min(36vw, 430px);
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+/* --- vertical year marker --- */
+
+.year {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.3em;
+  color: var(--h-dim);
+  z-index: 1;
+}
+
+/* --- bottom chrome --- */
+
+.chromeBottom {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.ruler {
+  display: block;
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--h-line) 0 10px,
+    transparent 10px 24px
+  );
+}
+
+.chromeBottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 12px 24px;
+  border: 1px solid var(--h-line);
+  border-radius: var(--r-pill);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--h-ink);
+  transition: background var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out);
+}
+
+.cta:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.scrollHint {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--h-dim);
+}
+
+/* --- narrow screens: stack the names, character sits behind them --- */
+
+@media (max-width: 760px) {
+  .stage {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .name {
+    font-size: clamp(2rem, 14vw, 4.25rem);
+  }
+
+  .nameLast {
+    align-self: flex-end;
+  }
+
+  .characterImage {
+    max-width: 58vw;
+    max-height: 44vh;
+  }
+
+  .year {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   INTRO — the substance the title card deliberately omits
+   ========================================================================== */
+
+.intro {
+  padding-block: var(--section-y);
+}
+
+.introGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+@media (max-width: 820px) {
+  .introGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bio {
+  max-width: 46ch;
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.bio b {
+  display: block;
+  margin-bottom: var(--s-1);
+  font-family: var(--sans);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.bioSecondary {
+  max-width: 46ch;
+  margin-top: var(--s-4);
+  font-family: var(--serif);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.cvWrap {
+  display: inline-flex;
+  margin-top: var(--s-5);
+}
+
+.cv {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.cvRule {
+  display: block;
+  width: 26px;
+  height: 1px;
+  background: currentColor;
+  transition: width var(--d-2) var(--e-out);
+}
+
+.cv:hover .cvRule {
+  width: 46px;
+}
+
+.social {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+.social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--rule-2);
+  border-radius: 50%;
+  font-size: 13px;
+  color: var(--ink-2);
+  transition: color var(--d-2) var(--e-out), border-color var(--d-2) var(--e-out),
+    background var(--d-2) var(--e-out);
+}
+
+.social a:hover {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+.detailRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--rule);
+}
+
+.detailLabel {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.detailValue {
+  margin: 0;
+  font-size: var(--fs-sm);
+  text-align: right;
+  color: var(--ink);
+}
+
+.detailValue a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-2);
+  transition: color var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out);
+}
+
+.detailValue a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+.stat {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--rule);
+}
+
+.statValue {
+  flex-shrink: 0;
+  min-width: 3.4em;
+  font-family: var(--sans);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.statLabel {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.45;
+  color: var(--ink-3);
+}
+
+/* --- working principles — the claims the bio makes, each one evidenced ---- */
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-top: var(--s-8);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--rule);
+  list-style: none;
+}
+
+@media (max-width: 820px) {
+  .principles {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+}
+
+/* Grid children default to min-width:auto, so a long token in the body could
+   otherwise push its column past the track the template hands it. */
+.principle {
+  min-width: 0;
+}
+
+.principleIndex {
+  display: block;
+  margin-bottom: var(--s-3);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tr-label);
+  color: var(--accent);
+}
+
+.principleTitle {
+  margin-bottom: var(--s-2);
+  font-family: var(--sans);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.principleBody {
+  max-width: 38ch;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}

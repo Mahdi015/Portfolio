@@ -1,0 +1,126 @@
+.section {
+  position: relative;
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+  overflow: hidden;
+}
+
+/* Faint engineering grid, faded out at the edges so it never reads as a
+   border. Purely atmospheric — it sits under everything. */
+.gridLines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 0 1px,
+      transparent 1px 132px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.028) 0 1px,
+      transparent 1px 132px
+    );
+  -webkit-mask-image: radial-gradient(
+    ellipse 78% 68% at 50% 50%,
+    #000 28%,
+    transparent 86%
+  );
+  mask-image: radial-gradient(
+    ellipse 78% 68% at 50% 50%,
+    #000 28%,
+    transparent 86%
+  );
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- heading --- */
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.25rem);
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* --- rows --- */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--band-rule);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.85rem, 3vw, 2.5rem);
+  padding: clamp(0.9rem, 2.2vw, 1.5rem) 0;
+  border-bottom: 1px solid var(--band-rule);
+  transition: padding-left var(--d-2) var(--e-out);
+}
+
+.row:hover {
+  padding-left: 10px;
+}
+
+.school {
+  font-size: var(--fs-entry);
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  color: var(--band-ink);
+}
+
+.degree {
+  font-family: var(--sans);
+  font-size: var(--fs-entry-sub);
+  font-weight: 500;
+  color: var(--band-ink-2);
+  transition: color var(--d-2) var(--e-out);
+}
+
+.row:hover .degree {
+  color: var(--band-ink);
+}
+
+.location {
+  color: var(--band-ink-2);
+  opacity: 0.65;
+}
+
+.period {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--band-ink-2);
+}
+
+/* The date is the fastest way to scan this list, so on a narrow screen it
+   leads the row instead of being pushed off the end. */
+@media (max-width: 760px) {
+  .row {
+    flex-wrap: wrap;
+    gap: 3px 12px;
+  }
+
+  .period {
+    order: -1;
+    width: 100%;
+    margin-left: 0;
+    letter-spacing: 0.18em;
+  }
+
+  .school,
+  .degree {
+    width: 100%;
+  }
+}

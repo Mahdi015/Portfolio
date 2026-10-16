@@ -1,0 +1,58 @@
+.field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Deep space is never flat black — a faint blue-violet lift at the centre
+     gives the gas something to sit in. */
+  background:
+    radial-gradient(
+      ellipse 90% 70% at 50% 42%,
+      var(--band-2) 0%,
+      var(--deck-lo) 45%,
+      var(--band) 100%
+    );
+}
+
+.clouds,
+.stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* The cloud buffer is fifth-resolution, so the blur both softens the gas and
+   hides the upscale. `screen` keeps it glowing rather than greying the ground. */
+.clouds {
+  filter: blur(54px) saturate(135%);
+  opacity: 0.6;
+  mix-blend-mode: screen;
+}
+
+.stars {
+  opacity: 0.95;
+}
+
+/* Large, very soft gradients band badly on 8-bit displays. A little noise
+   dithers the steps away. */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Pulls the edges down so the name type stays the brightest thing on screen. */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 72% 58% at 50% 45%,
+    transparent 0%,
+    color-mix(in srgb, var(--band) 50%, transparent) 74%,
+    color-mix(in srgb, var(--band) 88%, transparent) 100%
+  );
+}

@@ -1,0 +1,68 @@
+/* --- pinned branch (wide screens, motion allowed) --- */
+
+.outer {
+  position: relative;
+}
+
+.viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Keyed to vh, not vw: this is the one gap in the project measured against
+     the axis it actually consumes. The header, the card and the bar's band all
+     have to fit one pinned viewport, so on a short window the space between
+     the header and the reel is the first thing that should give way — scaling
+     it with width meant a wide, short window held a 2.5rem gap open while the
+     card below it was being clipped to pay for it. */
+  gap: clamp(0.75rem, 2vh, 2.5rem);
+  /* The bar is fixed, so nothing in the flow holds its band open: pinning at
+     top:0 put the header underneath it. This is the same reservation the hero
+     and the stack cube make, and it reads --nav-h — the height the navbar
+     measures onto the root — so the three cannot drift apart.
+
+     Padding rather than `top` plus a shorter height, so the band keeps
+     reaching the top edge instead of opening a strip of page background
+     behind the translucent bar. */
+  padding-top: calc(var(--nav-h) + var(--nav-gap));
+  padding-bottom: clamp(1rem, 3vh, 2rem);
+  overflow: hidden;
+}
+
+/* --- flow branch (narrow screens, or reduced motion) --- */
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.scroller {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  /* Let the row bleed to the screen edge, but keep the first card aligned
+     to the container gutter. */
+  padding-inline: var(--gutter);
+  padding-bottom: var(--s-2);
+  scrollbar-width: thin;
+}
+
+/* --- shared track --- */
+
+.track {
+  display: flex;
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  width: max-content;
+  will-change: transform;
+}
+
+.viewport .track {
+  padding-inline: var(--gutter);
+}
+
+.scroller .track > * {
+  scroll-snap-align: start;
+}

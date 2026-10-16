@@ -1,124 +1,408 @@
-.carousel {
-  --skill-gap: clamp(4rem, 12vw, 8rem);
+/* ==========================================================================
+   TECH STACK — a real CSS 3D cube of keycaps, scrubbed by scroll
+   Six faces in one preserve-3d space: genuine perspective, genuine occlusion,
+   no canvas and no WebGL. Each face is a keyboard deck; each skill is a
+   moulded keycap that presses when you hover it.
 
+   SPACING RULE: everything inside the cube is a fraction of --cube, never a
+   vw/vh/rem of its own. The cube is sized off viewport height, so any padding
+   measured in vw drifted out of proportion the moment the window changed
+   shape — a wide short screen got a small cube with fat padding. Sizing the
+   interior off the cube itself keeps the face composition identical at every
+   size, and makes the cube resizable from exactly one number.
+   ========================================================================== */
+
+.section {
   position: relative;
-  overflow: hidden;
-  margin-top: 0.5rem;
-  box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.08), -1px -2px 3px rgba(0, 0, 0, 0.08);
+  /* Fallback for the flat branch, which has no .scene to size the keys. */
+  --cube: 13rem;
 }
+
+/* --- shared header ------------------------------------------------------- */
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding-inline: var(--gutter);
+}
+
+/* Same height cap as the reel's heading, and for the same reason: this header
+   shares a pinned 100vh with the cube, and the cube is sized off that height.
+   On a normal window the vw term wins and this matches every other section. */
+/* Element-qualified so it beats the global .sectionTitle on specificity rather
+   than on bundle order, which is not something a stylesheet should depend on. */
+h2.heading {
+  font-size: clamp(2rem, min(4.6vw, 7vh), 3.25rem);
+}
+
+/* What the h2 used to say. Demoted to a lead line so the heading can carry the
+   section's name at the site's heading size, without losing the copy. */
+.lead {
+  max-width: 46ch;
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+  color: var(--band-ink-2);
+}
+
+.accent {
+  font-style: normal;
+  color: var(--band-accent);
+}
+
+/* --- the scroll track ----------------------------------------------------
+   300vh buys 50vh of travel per face: enough that a face is readable at rest
+   before the next turn starts, without the section outstaying its welcome.
+   ------------------------------------------------------------------------ */
 
 .track {
-  width: 100%;
-  height: 110px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
+  position: relative;
+  height: 300vh;
 }
 
-.scroll {
-  display: flex;
-  width: max-content;
-  animation: scroll 45s linear infinite;
-  will-change: transform;
-}
-
-.track:hover .scroll {
-  animation-play-state: paused;
-}
-
-.set {
-  display: flex;
-  align-items: center;
-  gap: var(--skill-gap);
-  padding-right: var(--skill-gap);
-  list-style: none;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  min-width: 130px;
-  height: 64px;
-  transition: transform 0.2s ease;
-}
-
-.item:hover {
-  transform: scale(1.1);
-}
-
-.logo {
-  width: auto;
-  height: auto;
-  max-width: 100px;
-  max-height: 64px;
-  object-fit: contain;
-}
-
-.fade {
-  background: linear-gradient(
-    to right,
-    var(--color-bg) 0%,
-    transparent 15%,
-    transparent 85%,
-    var(--color-bg) 100%
-  );
-  height: 100%;
-  left: 0;
-  position: absolute;
+.viewport {
+  position: sticky;
   top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(0.75rem, 1.8vh, 1.25rem);
+  /* The bar is fixed, so nothing in the flow holds its band open: pinning at
+     top:0 put this header underneath it. Reserving the measured height is the
+     same thing the hero's sticky does, and it reads --nav-h rather than a
+     clamp tuned to match, so the two cannot drift apart.
+
+     It stays padding rather than `top` + a shorter height on purpose — the
+     band has to keep reaching the top edge, or a gap of page background opens
+     behind the translucent bar. */
+  padding-top: calc(var(--nav-h) + var(--nav-gap));
+  padding-bottom: clamp(1rem, 3.5vh, 2rem);
+  /* No `overflow: hidden` — it would create a paint containment box and
+     flatten the 3D back into the page plane. */
+}
+
+/* --- the 3D space --------------------------------------------------------
+   `perspective` belongs on the parent of the rotating element, never on the
+   element itself: on the cube it would be re-applied per face and the box
+   would shear instead of turn.
+
+   The height cap governs on most laptops, and it has to: a cube at 45deg
+   through a turn projects to its own diagonal, about 1.41x its width, so the
+   viewport needs room for more than the cube's flat size.
+   ------------------------------------------------------------------------ */
+
+.scene {
+  --cube: clamp(15rem, min(32vw, 34vh), 27rem);
+  --half: calc(var(--cube) / 2);
+
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  perspective: calc(var(--cube) * 3.4);
+  perspective-origin: 50% 45%;
+}
+
+/* Half the cube's depth of setback. Without it the parked face sits half a
+   cube nearer the camera than the box's centre, so the perspective magnifies
+   it by about 17% — and a layer rasterised at 1x then scaled to 1.17x is
+   exactly the soft, slightly-out-of-focus look. At z=0 it draws true size. */
+.shift {
+  position: relative;
+  width: var(--cube);
+  height: var(--cube);
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--half) * -1));
+}
+
+.cube {
+  position: relative;
   width: 100%;
-  z-index: 5;
-  pointer-events: none;
-  transition: opacity 0.5s linear, visibility 0.5s linear;
+  height: 100%;
+  transform-style: preserve-3d;
+  /* No will-change here on purpose: a permanent compositor layer is rasterised
+     once at whatever scale it had and never re-sharpened. Motion promotes the
+     element for the duration of the scrub and releases it afterwards, which is
+     what lets it come back crisp at rest. */
 }
 
-:global(html[data-theme="light"]) .fade {
-  opacity: 0;
-  visibility: hidden;
+/* --- the six faces -------------------------------------------------------
+   Each face is built in place and then pushed out half the cube's width along
+   its own Z. The rotation keyframes in Skills.tsx are the inverse of these.
+   ------------------------------------------------------------------------ */
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(var(--cube) * 0.035);
+  padding: calc(var(--cube) * 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: calc(var(--cube) * 0.055);
+  /* The deck the caps are mounted on, lit slightly from above. These are the
+     hero's own sky steps — the deck used to be neutral grey, which read as a
+     foreign object sitting on a violet band. */
+  background: linear-gradient(
+    165deg,
+    var(--deck-hi) 0%,
+    var(--deck) 45%,
+    var(--deck-lo) 100%
+  );
+  /* Without this the far side of the box shows through mirror-reversed. */
+  backface-visibility: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
 }
 
-@keyframes scroll {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
+.front {
+  transform: translateZ(var(--half));
+}
+
+.right {
+  transform: rotateY(90deg) translateZ(var(--half));
+}
+
+.back {
+  transform: rotateY(180deg) translateZ(var(--half));
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(var(--half));
+}
+
+.top {
+  transform: rotateX(90deg) translateZ(var(--half));
+}
+
+.bottom {
+  transform: rotateX(-90deg) translateZ(var(--half));
+}
+
+.faceLabel {
+  font-family: var(--mono);
+  font-size: max(0.5625rem, calc(var(--cube) * 0.032));
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--band-ink-2);
+}
+
+/* --- the keys ------------------------------------------------------------ */
+
+.keys {
+  /* Declared here so both the cap (which draws the skirt) and the key (which
+     has to leave room beneath it) resolve the same number. */
+  --skirt: max(3px, calc(var(--cube) * 0.028));
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--cube) * 0.04);
+  place-items: center;
+  list-style: none;
+  margin: 0;
+}
+
+.key {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* The skirt is a box-shadow, so it takes no layout space — the legend was
+     being measured from the cap's top face and ended up tucked under the
+     moulding. Adding the skirt back makes the gap the one you actually see. */
+  gap: calc(var(--skirt) + var(--cube) * 0.028);
+  min-width: 0;
+}
+
+/* --- the keycap ----------------------------------------------------------
+   One element doing the work of three: the gradient is the moulded top, the
+   two inset shadows are the lip catching light and the shaded underside, and
+   the solid offset shadow is the skirt the cap sits on. Pressing it shortens
+   the skirt, which is what selling the travel actually depends on.
+   ------------------------------------------------------------------------ */
+
+.cap {
+  --cap-dark: color-mix(in srgb, var(--cap) 52%, var(--band));
+
+  display: grid;
+  place-items: center;
+  width: calc(var(--cube) * 0.275);
+  aspect-ratio: 1;
+  border-radius: calc(var(--cube) * 0.055);
+  background: linear-gradient(
+    172deg,
+    color-mix(in srgb, var(--cap) 84%, #ffffff) 0%,
+    var(--cap) 38%,
+    color-mix(in srgb, var(--cap) 88%, var(--band)) 100%
+  );
+  box-shadow: inset 0 2px 1px rgba(255, 255, 255, 0.34),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.3),
+    0 var(--skirt) 0 var(--cap-dark),
+    0 calc(var(--skirt) + 3px) 9px rgba(0, 0, 0, 0.55);
+  /* The release: slower than the press, the way a spring returns. */
+  transition: transform 170ms var(--e-out), box-shadow 170ms var(--e-out);
+}
+
+/* About 45% of the cap, so the mark sits in clear moulding instead of running
+   to the edges. It matters most for the marks that are square by design —
+   TypeScript, JavaScript, CSS — which without the inset read as a badge stuck
+   onto the cap rather than a legend printed into it.
+
+   No drop-shadow: a filter forces its own raster pass and softens the vector
+   edges, which is the opposite of what these need. */
+.capIcon {
+  font-size: calc(var(--cube) * 0.125);
+  color: var(--ink);
+}
+
+/* The press. Fast on the way down — a key that eases into its own travel
+   feels mushy — and the skirt collapses to almost nothing so the cap reads as
+   bottomed out rather than merely lower. */
+.key:hover .cap,
+.key:focus-within .cap {
+  transform: translateY(calc(var(--skirt) - 1px));
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.32), 0 1px 0 var(--cap-dark),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  transition-duration: 70ms;
+}
+
+.legend {
+  font-family: var(--mono);
+  font-size: max(0.5625rem, calc(var(--cube) * 0.034));
+  letter-spacing: 0.04em;
+  text-align: center;
+  line-height: 1.25;
+  color: var(--band-ink-2);
+  transition: color var(--d-2) var(--e-out);
+}
+
+.key:hover .legend {
+  color: var(--band-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .duplicate {
-    display: none;
+  .cap,
+  .key:hover .cap,
+  .key:focus-within .cap {
+    transition-duration: 1ms;
   }
+}
 
-  .scroll {
-    animation: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 1rem;
-    will-change: auto;
-  }
+/* --- readout: which face is forward -------------------------------------- */
 
-  .set {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-    padding-right: 0;
-    width: 100%;
-  }
+.readout {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding-inline: var(--gutter);
+}
 
-  .item {
-    min-width: 120px;
-  }
+.dots {
+  display: flex;
+  gap: var(--s-2);
+  list-style: none;
+  margin: 0;
+}
 
-  .track {
-    height: auto;
-    min-height: 110px;
-    padding: 1rem 0;
-  }
+.dot,
+.dotOn {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--band-rule);
+  transition: background var(--d-2) var(--e-out),
+    transform var(--d-2) var(--e-out);
+}
+
+.dotOn {
+  background: var(--band-accent);
+  transform: scale(1.5);
+}
+
+.hint {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--band-ink-2);
+}
+
+.headRow {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.25rem);
+}
+
+/* Pushed to the far end of the row, so the heading and its marker stay a pair
+   rather than being spaced apart by `space-between`. */
+.headRow .sound {
+  margin-left: auto;
+}
+
+.sound {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--band-rule);
+  border-radius: 50%;
+  background: transparent;
+  font-size: 13px;
+  color: var(--band-ink-2);
+  cursor: pointer;
+  transition: color var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out), background var(--d-2) var(--e-out);
+}
+
+.sound:hover {
+  color: var(--band-ink);
+  border-color: var(--band-ink-2);
+  background: var(--band-surface);
+}
+
+/* ==========================================================================
+   FLAT BRANCH — narrow screens and reduced motion
+   Same decks, same keycaps, no pinning and no rotation.
+   ========================================================================== */
+
+.flatInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+  padding-block: var(--section-y);
+}
+
+.flat {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: var(--s-5);
+  padding-inline: var(--gutter);
+}
+
+.flatGroup {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--cube) * 0.045);
+  padding: calc(var(--cube) * 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: calc(var(--cube) * 0.055);
+  background: linear-gradient(
+    165deg,
+    var(--deck-hi) 0%,
+    var(--deck) 45%,
+    var(--deck-lo) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.flatLabel {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--band-ink-2);
 }

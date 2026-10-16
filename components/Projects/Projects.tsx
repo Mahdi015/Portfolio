@@ -1,98 +1,108 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useInView } from "react-intersection-observer";
+import PinnedReel from "@/components/motion/PinnedReel";
+import Tilt from "@/components/motion/Tilt";
 import { projects } from "@/data/portfolio";
 import { hasProjectDetail } from "@/lib/projects";
-import SectionTitle from "@/components/SectionTitle";
 import styles from "./Projects.module.css";
 
+/**
+ * The inverted band.
+ *
+ * Deliberately the only dark zone on a paper page: 3D tilt and a glass surface
+ * need a ground that can hold a highlight, and a gear-change mid-page is an
+ * editorial device rather than an inconsistency.
+ */
 export default function Projects() {
-  const [ref, inView] = useInView({ threshold: 0, triggerOnce: true });
-
   return (
-    <section id="projects" className={styles.section}>
-      <SectionTitle highlight=" Projects">My</SectionTitle>
-
-      <div
-        ref={ref}
-        className={inView ? `${styles.grid} fade-in` : `${styles.grid} animate-pending`}
+    <section id="projects" className={`band ${styles.section}`} data-nav-dark="">
+      <PinnedReel
+        trackClassName={styles.track}
+        header={
+          <div className={styles.head}>
+            {/* The site's shared heading, so the band doesn't read as a
+                lesser section than the two it sits between. The size cap
+                against viewport height lives in this module — this header
+                shares a pinned 100vh with a full-size card. */}
+            <h2 className={`sectionTitle ${styles.heading}`}>Selected work</h2>
+            <span className="sectionMarker" aria-hidden="true" />
+          </div>
+        }
       >
-        {projects.map((project) => {
-          const showDetailPage = hasProjectDetail(project);
+        {projects.map((project, index) => {
           const detailHref =
-            showDetailPage && project.slug
+            hasProjectDetail(project) && project.slug
               ? `/projects/${project.slug}`
               : null;
 
           const media =
             project.imageStyle === "iconBackground" ? (
-              <div className={styles.iconBanner}>
-                <div className={styles.iconBannerOverlay} />
+              <div className={`${styles.media} ${styles.iconMedia}`}>
                 <Image
                   src={project.image}
                   alt={`${project.title} app icon`}
-                  width={88}
-                  height={88}
+                  width={96}
+                  height={96}
                   className={styles.appIcon}
                 />
               </div>
             ) : (
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={310}
-                height={200}
-                className={styles.image}
-              />
+              <div className={styles.media}>
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  width={640}
+                  height={400}
+                  className={styles.image}
+                />
+              </div>
             );
 
           const body = (
             <>
               {media}
-              <div className={styles.details}>
-                <h3>{project.title}</h3>
+              <div className={styles.body}>
+                <i className={styles.index}>
+                  {String(index + 1).padStart(2, "0")}
+                  {project.company ? ` · ${project.company}` : ""}
+                </i>
+                <h3 className={styles.cardTitle}>{project.title}</h3>
                 {project.subtitle && (
                   <p className={styles.subtitle}>{project.subtitle}</p>
                 )}
                 {project.description && (
                   <p className={styles.description}>{project.description}</p>
                 )}
+                <span className={styles.cta}>
+                  {detailHref ? "View project" : project.linkLabel ?? "Live demo"}
+                  <span aria-hidden="true">&#8599;</span>
+                </span>
               </div>
             </>
           );
 
-          if (detailHref) {
-            return (
-              <Link
-                key={project.title}
-                href={detailHref}
-                className={`${styles.card} ${styles.cardLink}`}
-              >
-                {body}
-                <span className={styles.button}>View Project</span>
-              </Link>
-            );
-          }
-
           return (
-            <article key={project.title} className={styles.card}>
-              {body}
-              {project.demoUrl && (
+            <Tilt key={project.title} className={styles.tilt} max={7} lift={12}>
+              {detailHref ? (
+                <Link href={detailHref} className={styles.card}>
+                  {body}
+                </Link>
+              ) : project.demoUrl ? (
                 <a
                   href={project.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={styles.button}
+                  className={styles.card}
                 >
-                  {project.linkLabel ?? "Live Demo"}
+                  {body}
                 </a>
+              ) : (
+                <article className={styles.card}>{body}</article>
               )}
-            </article>
+            </Tilt>
           );
         })}
-      </div>
+      </PinnedReel>
     </section>
   );
 }

@@ -1,151 +1,363 @@
 .navbar {
-  display: flex;
-  width: 100%;
-  position: absolute;
-  z-index: 999;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 160px;
-  transition: all 0.5s linear;
-  top: 0;
-}
-
-.navbar.active {
   position: fixed;
-  top: 0;
-  box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.08);
+  inset: 0 0 auto;
+  z-index: 100;
+  /* Three tracks with equal outer columns, so the link group is centred on the
+     window rather than in whatever space the logo and actions leave over.
+     Under flex + `margin-inline: auto` it sat visibly left of centre, because
+     the actions cluster is several times wider than the monogram — and the
+     hero it sits on is a centred composition, so the drift showed. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--s-4);
+  /* Every label in this bar is uppercase, and uppercase has no descenders --
+     but the line box still reserves the descender space below the baseline.
+     That empty band is larger than the gap above the cap height, so geometric
+     centring leaves the whole cluster reading high. The padding is split to
+     put it on the optical centre instead: --nav-drop more above than below,
+     which lowers the content without changing the bar's height, so the rule
+     and the progress line on the bottom edge stay where they are.
+     --nav-pad lives on :root beside --nav-h, so the fallback height the rest
+     of the page reserves is built from the same number the bar pads with. */
+  --nav-drop: 7px;
+  padding-block: calc(var(--nav-pad) + var(--nav-drop))
+    calc(var(--nav-pad) - var(--nav-drop));
+  padding-inline: var(--gutter);
+  transition: background var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out), color var(--d-2) var(--e-out);
+  border-bottom: 1px solid transparent;
 }
 
-.logo a {
-  text-decoration: none;
+/* --- palette states -------------------------------------------------------
+   `onDark` rides over the hero and the projects band; `onLight` over paper.
+   Only these two blocks set colour, so nothing below has to know where it is.
+   ------------------------------------------------------------------------- */
+
+.onDark {
+  --nav-ink: var(--band-ink);
+  --nav-dim: var(--band-ink-2);
+  --nav-line: rgba(255, 255, 255, 0.22);
+  --nav-hover: #ffffff;
+  /* The deck's lowest step, held translucent so the band reads through it. */
+  --nav-glass: color-mix(in srgb, var(--deck-lo) 62%, transparent);
+  --nav-progress: var(--band-accent-2);
+  /* Deliberately the hero frame's own hairline value, so the bar's rule and
+     the title card's inset border read as one system rather than two. */
+  --nav-rule: var(--band-rule);
+}
+
+.onLight {
+  --nav-ink: var(--ink);
+  --nav-dim: var(--ink-2);
+  --nav-line: var(--rule-2);
+  --nav-hover: var(--accent);
+  --nav-glass: color-mix(in srgb, var(--paper) 78%, transparent);
+  --nav-progress: var(--accent);
+  --nav-rule: var(--rule-2);
+}
+
+.navbar {
+  color: var(--nav-ink);
+}
+
+.scrolled {
+  background: var(--nav-glass);
+  backdrop-filter: blur(14px);
+  border-bottom-color: var(--nav-line);
+}
+
+/* --- logo --- */
+
+.logo {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 1.125rem;
   font-weight: 800;
-  text-transform: uppercase;
-  font-size: 30px;
-  color: var(--color-accent);
-  padding: 15px;
-  line-height: 50px;
-  font-family: var(--font-roboto), "Roboto", sans-serif;
+  letter-spacing: 0.08em;
+  color: var(--nav-ink);
+}
+
+.sparkle {
+  width: 13px;
+  height: 13px;
+  fill: var(--band-accent-2);
+  transition: transform var(--d-3) var(--e-out);
+}
+
+.logo:hover .sparkle {
+  transform: rotate(90deg) scale(1.15);
+}
+
+/* --- centre links ---------------------------------------------------------
+   The group is a rail: one container, even internal gaps, each item a pill
+   with its own padding. Spacing therefore comes from the items themselves
+   rather than from a separator glyph, which previously meant the gaps were
+   set by that character's own side bearings and drifted with the font.
+   ------------------------------------------------------------------------- */
+
+.rail {
+  justify-self: center;
+  display: flex;
+  padding: 5px;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  transition: background var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out);
+}
+
+/* The rail only materialises once the bar has detached from the hero. Over
+   the title card a second pill outline would compete with the inset frame. */
+.scrolled .rail {
+  background: color-mix(in srgb, var(--nav-ink) 7%, transparent);
+  border-color: var(--nav-line);
 }
 
 .links {
   display: flex;
   align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .links a {
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 15px;
-  padding: 20px;
+  display: block;
+  /* 10/8 rather than 9/9: same box height, but the caps sit on the pill's
+     optical centre instead of riding high in it once the hover fill shows. */
+  padding: 10px clamp(0.85rem, 1.5vw, 1.35rem) 8px;
+  border-radius: var(--r-pill);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--nav-dim);
+  transition: color var(--d-2) var(--e-out), background var(--d-2) var(--e-out),
+    box-shadow var(--d-2) var(--e-out);
 }
 
 .links a:hover {
-  color: #9399c0;
+  color: var(--nav-hover);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+/* The section being read is filled in the accent, so it stays identifiable as
+   the current one even while the pointer is sitting on a different item. */
+.links a[aria-current="true"] {
+  color: var(--nav-ink);
+  background: color-mix(in srgb, var(--nav-progress) 20%, transparent);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--nav-progress) 38%, transparent);
+}
+
+/* --- right-hand actions --- */
+
+.actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
 }
 
 .themeToggle {
-  margin-right: 2rem;
-}
-
-.toggleLabel {
-  width: 60px;
-  height: 31px;
-  border: 2px solid var(--color-primary);
-  border-radius: 30px;
-  position: relative;
-  cursor: pointer;
-  display: block;
-}
-
-.toggleLabel input {
-  display: none;
-}
-
-.ball,
-.moon,
-.sun {
-  position: absolute;
-  transform: translateX(-50%);
-}
-
-.ball {
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  background-color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  left: 11px;
-  z-index: 10;
-  bottom: 1px;
-  transition: 0.5s ease-in-out;
+  font-size: 13px;
+  color: var(--nav-dim);
+  transition: color var(--d-2) var(--e-out), background var(--d-2) var(--e-out);
 }
 
-.moon {
-  right: -2px;
-  top: 2px;
+.themeToggle:hover {
+  color: var(--nav-hover);
+  background: color-mix(in srgb, currentColor 12%, transparent);
 }
 
-.sun {
-  left: 12px;
-  top: 2px;
+.cta {
+  /* Same split as the links. It matters most here: the CTA's border is always
+     visible, so the label riding high inside it is on show at all times. */
+  padding: 14px 28px 12px;
+  border: 1px solid var(--nav-line);
+  border-radius: var(--r-pill);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--nav-ink);
+  transition: background var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out), color var(--d-2) var(--e-out);
 }
 
-.toggleLabel input:checked + .ball {
-  transform: translate(21px, 0%);
+.onDark .cta:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--deck-lo);
 }
+
+.onLight .cta:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* --- hero hairline --------------------------------------------------------
+   At rest the bar carries a rule that stops at the hero's gutters instead of
+   bleeding to the window edge, which is what makes it read as the title
+   card's own header rather than a panel floating above it. It hands off to
+   the full-bleed `.scrolled` border the moment the bar detaches.
+   ------------------------------------------------------------------------- */
+
+.rule {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 0;
+  height: 1px;
+  background: var(--nav-rule);
+  opacity: 0;
+  transition: opacity var(--d-2) var(--e-out);
+}
+
+.navbar:not(.scrolled):not(.menuOpen) .rule {
+  opacity: 1;
+}
+
+/* --- scroll progress --- */
+
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--nav-progress);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  /* Only the colour transitions — scaleX is driven per scroll event and would
+     lag visibly behind the pointer if it eased. */
+  transition: background var(--d-2) var(--e-out);
+}
+
+/* --- mobile --- */
 
 .menuButton {
   display: none;
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
+  color: var(--nav-ink);
 }
 
-.mobileMenu {
-  position: absolute;
-  display: none;
-  flex-direction: column;
-  padding: 1.5rem;
-  background: #000;
-  margin-top: 1.5rem;
-  top: 60px;
-  right: 20px;
-  box-shadow: -1px 1px 1px rgb(20 97 255 / 10%);
-}
+/* Six labels is what the rail holds, and the two longest (EXPERIENCE,
+   EDUCATION) arrived with the sections they name. Between the widest laptop
+   and the burger breakpoint the pills therefore give up some of their side
+   padding and a little tracking rather than letting the group grow into the
+   actions cluster — the bar stays one centred row, which is the whole point
+   of the three-track grid above. */
+@media (max-width: 1200px) {
+  .links a {
+    padding-inline: 0.62rem;
+    letter-spacing: 0.12em;
+  }
 
-.mobileMenu a {
-  margin-bottom: 8px;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-@media screen and (max-width: 1120px) {
-  .navbar {
-    padding: 20px 100px;
+  .cta {
+    padding-inline: 18px;
   }
 }
 
-@media screen and (max-width: 990px) {
+/* Below this the rail can't hold six items at a readable size, so the bar
+   hands the whole set to the burger — which lists them all, CTA included. */
+@media (max-width: 1024px) {
+  /* Two tracks once the rail is gone, or the actions would land in the middle
+     column and stop short of the right gutter. */
   .navbar {
-    padding: 20px 45px;
+    grid-template-columns: 1fr auto;
   }
-}
 
-@media screen and (max-width: 775px) {
-  .links {
+  .rail,
+  .cta {
     display: none;
   }
 
   .menuButton {
-    display: block;
+    display: inline-flex;
   }
+}
 
-  .mobileMenu {
-    display: flex;
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--s-2);
+  padding: var(--s-9) var(--gutter) var(--s-7);
+  background: var(--paper);
+  animation: menuIn var(--d-2) var(--e-out) both;
+}
+
+/* The overlay always uses page colours, so the bar's dark state can't leave
+   light text on a light sheet. */
+.menuOpen {
+  color: var(--ink);
+  --nav-ink: var(--ink);
+  --nav-dim: var(--ink-2);
+  --nav-line: var(--rule-2);
+  --nav-hover: var(--accent);
+}
+
+.mobileMenu a {
+  font-family: var(--sans);
+  font-size: clamp(1.75rem, 8vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--ink);
+  animation: itemIn var(--d-3) var(--e-out) both;
+  animation-delay: calc(var(--i, 0) * 55ms + 60ms);
+}
+
+.mobileMenu a:hover {
+  color: var(--accent);
+}
+
+.mobileCta {
+  margin-top: var(--s-4);
+  font-family: var(--mono) !important;
+  font-size: var(--fs-mono) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.18em !important;
+  padding: 13px 28px;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r-pill);
+}
+
+@keyframes menuIn {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
 
-  .navbar {
-    padding: 20px;
+@keyframes itemIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

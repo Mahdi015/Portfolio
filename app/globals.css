@@ -1,3 +1,22 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   One palette, taken from the hero.
+
+   The hero's title card is the first thing anyone sees, so it sets the key:
+   a violet-black ground (#070610), violet (#a78bfa) and teal (#5fd5c8)
+   accents, cool white ink (#f2f4ff). Every surface on the page is now tuned
+   to that family — the paper is violet-tinted rather than warm, the band IS
+   the hero's own ground, and both accents are the hero's.
+
+   Nothing below is a new colour invented for the token file. Each one is
+   either lifted from the hero verbatim or derived from a hero colour for
+   contrast. Sections that used to declare their own hexes now read these,
+   so the palette can only be changed in one place.
+
+   Light paper is primary. Dark is a designed second theme, not an inversion.
+   The band is always the deepest surface in either theme.
+   ========================================================================== */
+
 *,
 *::before,
 *::after {
@@ -6,183 +25,489 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* --- surfaces & ink (light) ---------------------------------------------
+     Violet-tinted rather than the warm stock it used to be: a warm paper put
+     the light half of the site in a different colour family from the hero,
+     which is the mismatch this palette exists to close. --ink is the hero's
+     ground lifted just far enough to read as type. */
+  --paper: #faf9fe;
+  --paper-2: #f3f1fa;
+  --paper-3: #e8e5f4;
+  --ink: #0d0b18;
+  --ink-2: #4b4766;
+  /* 5.2:1 on paper. The old #8b87a8 measured 3.27:1 — under AA for body text,
+     and this is the token that colours the 11px mono labels, the form labels
+     and every placeholder, i.e. the smallest type on the site. Darkened until
+     it clears 4.5:1 on paper, paper-2 and paper-3 alike. */
+  --ink-3: #6a6686;
+  --rule: #e2dff2;
+  --rule-2: #c9c5e0;
+  /* Rules are decoration and may stay faint; a form field's edge is the only
+     thing saying "you can type here", so it answers to WCAG 1.4.11 instead
+     (3:1 against its own fill). Kept separate so softening --rule can never
+     quietly take the inputs with it. */
+  --field-line: #857fa5;
+
+  /* --- accent ---
+     The hero's violet, darkened until it clears 4.5:1 on paper (it lands at
+     5.9:1). Dark theme hands the undarkened hero value straight back. */
+  --accent: #6d44d9;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(109, 68, 217, 0.08);
+
+  /* --- inverted band — deepest surface in both themes ----------------------
+     Verbatim from the hero: --band is .cinematic's background, --band-2 the
+     midpoint of the particle sky, --band-rule the inset frame's hairline.
+     The band and the hero are now literally the same surface, which is why
+     the page no longer changes colour temperature when you scroll out of the
+     title card. */
+  --band: #070610;
+  --band-2: #100c22;
+  --band-ink: #f2f4ff;
+  --band-ink-2: #9b9fc0;
+  --band-rule: rgba(255, 255, 255, 0.13);
+  --band-surface: rgba(255, 255, 255, 0.045);
+  --band-surface-hi: rgba(255, 255, 255, 0.08);
+  --band-accent: #5fd5c8;
+  --band-accent-2: #a78bfa;
+
+  /* --- raised dark surfaces (keycap decks, cards on the band) --------------
+     The hero's particle sky, one step up from --band so anything mounted on
+     it reads as sitting above the ground rather than cut into it. */
+  --deck-hi: #1d1738;
+  --deck: #130f26;
+  --deck-lo: #0a0817;
+
+  /* --- type --- */
+  /* Three voices, each with one job: the grotesque sets every heading and all
+     UI, the serif carries running text, the mono carries labels, dates and
+     figures. A fourth display face (a copperplate script) set the section
+     headings until it was cut — four voices on one page, and the only one of
+     them that wasn't earning its keep. */
+  --sans: var(--font-archivo), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  --mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo,
+    Consolas, monospace;
+
+  --fs-mono: 0.6875rem; /* 11px — labels, metadata */
+  --fs-xs: 0.78125rem; /* 12.5px */
+  --fs-sm: 0.875rem; /* 14px */
+  --fs-base: 1rem;
+  --fs-lg: 1.0625rem;
+  --fs-xl: clamp(1.125rem, 1.6vw, 1.3125rem);
+  --fs-h3: clamp(1.125rem, 1.8vw, 1.375rem);
+  /* An entry's own title (a role, a school) and the line under it. Experience
+     and Education each carried a private copy of both clamps, which is how
+     two sections meant to be typographic twins drift apart. */
+  --fs-entry: clamp(1.05rem, 1.8vw, 1.5rem);
+  --fs-entry-sub: clamp(0.875rem, 1.2vw, 1.0625rem);
+  /* Every section heading. One token, so the page can't grow a second size
+     for the same rank — which is exactly what happened while four sections
+     set their heading in a display face and a fifth set its own in sans. */
+  --fs-h2: clamp(2rem, 4.6vw, 3.25rem);
+  /* The hero wordmark, and nothing else on the site. */
+  --fs-display: clamp(2.25rem, 10.5vw, 8.75rem);
+
+  --lh-tight: 0.95;
+  --lh-snug: 1.2;
+  --lh-body: 1.65;
+
+  --tr-tight: -0.04em;
+  --tr-label: 0.14em;
+
+  /* --- space --- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+
+  /* --- layout --- */
+  --gutter: clamp(1.25rem, 4.5vw, 3.5rem);
+
+  /* --- navbar geometry ----------------------------------------------------
+     The bar is fixed, so nothing in the flow holds its band open: anything
+     that has to sit clear of it reserves --nav-h instead. Navbar measures
+     itself on mount and overwrites --nav-h with its real height, so the two
+     cannot drift apart when the bar's type or padding changes. The static
+     value below is only the first-paint and no-JS fallback, and is composed
+     the way the bar itself is: its tallest item (the CTA pill, 11px mono on
+     --lh-body plus 14/12 padding) inside its own padding.
+     -------------------------------------------------------------------- */
+  --nav-pad: clamp(0.9rem, 2.2vh, 1.5rem);
+  --nav-h: calc(2.75rem + 2 * var(--nav-pad));
+  /* Breathing room between the bar and whatever sits directly beneath it.
+     Also the budget the hero's chrome has to move up into while it fades. */
+  --nav-gap: clamp(1.25rem, 3vh, 2rem);
+  --section-y: clamp(3.5rem, 8vw, 7rem);
+
+  /* --- radius --- */
+  --r-sm: 3px;
+  --r-md: 6px;
+  --r-lg: 15px;
+  --r-pill: 100px;
+
+  /* --- motion --- */
+  --e-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --e-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --d-1: 0.18s;
+  --d-2: 0.32s;
+  --d-3: 0.6s;
+  --d-4: 0.9s;
+}
+
+html[data-theme="dark"] {
+  /* Paper in dark is the hero's ground lifted twice, so the band below it is
+     still visibly deeper. Ink is the hero's --h-ink verbatim. */
+  --paper: #120f22;
+  --paper-2: #19152e;
+  --paper-3: #231d3d;
+  --ink: #f2f4ff;
+  --ink-2: #aba8c9;
+  /* 5.5:1 on dark paper; the light theme's old value, which is bright enough
+     here and keeps the two themes' muted ink in the same hue family. */
+  --ink-3: #8b87a8;
+  --rule: #272145;
+  --rule-2: #362f5c;
+  --field-line: #6b6498;
+
+  /* No darkening needed here — this is the hero's accent as the hero uses it. */
+  --accent: #a78bfa;
+  --accent-ink: #0d0b18;
+  --accent-soft: rgba(167, 139, 250, 0.14);
+
+  /* --band and the deck hold their values: they are already the hero's own
+     surfaces, and the hero does not change between themes. Paper moving down
+     to #120f22 is what keeps the band reading as the deeper zone. */
+}
+
 html {
   scroll-behavior: smooth;
-}
-
-:root {
-  --color-accent: #ea7186;
-  --color-primary: #7a77b9;
-  --color-muted: #ababab;
-  --color-bg: #161a2b;
-  --color-surface: #161a2b;
-  --color-text: #fff;
-  --color-navbar: #161a2b;
-  --color-card-bg: #161a2b;
-  --color-input-border: #999379;
-  --color-service-text: #c4c4cc;
-  --color-experience-subtitle: #c4c4cc;
-}
-
-html[data-theme="light"] {
-  --color-bg: #ebe8e7;
-  --color-surface: #e3e2df;
-  --color-text: #7a77b9;
-  --color-navbar: #ebe8e7;
-  --color-card-bg: #e3e2df;
-  --color-service-text: #4a4766;
-  --color-experience-subtitle: #4a4766;
+  -webkit-text-size-adjust: 100%;
+  /* Anchor links land below the fixed bar rather than under it. */
+  scroll-padding-top: calc(var(--nav-h) + var(--nav-gap));
 }
 
 body {
-  letter-spacing: 0.5px;
-  background: var(--color-bg);
-  color: var(--color-text);
-  transition: background 0.3s ease, color 0.3s ease;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--d-2) ease, color var(--d-2) ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--sans);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
 }
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
-ul {
+ul,
+ol {
   list-style: none;
 }
 
-.sm_border {
-  display: block;
-  height: 2px;
-  width: 70px;
-  margin-bottom: 15px;
-  background-color: var(--color-accent);
-  transform: translate(-50%, 0);
-  position: relative;
-  left: 50%;
+img,
+svg,
+canvas {
+  max-width: 100%;
 }
 
-.animate-pending {
-  opacity: 0;
-}
-
-.section-header h2 {
-  font-size: 42px;
-  font-weight: 600;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.section-header span {
-  font-weight: 600;
-  color: var(--color-accent);
-}
-
-.scroll-to-top {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 1000;
-  width: 44px;
-  height: 44px;
-  border: none;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: #fff;
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.scroll-to-top:hover {
-  transform: translateY(-2px);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
 }
 
-.scale-up-center {
-  animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+/* Off-screen until focused, then parked over the bar. Not `display: none` and
+   not `visibility: hidden` — either would take it out of the tab order, which
+   is the one thing it exists to be in. */
+.skipLink {
+  position: fixed;
+  top: var(--s-4);
+  left: var(--s-4);
+  z-index: 200;
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  transform: translateY(-200%);
+  transition: transform var(--d-2) var(--e-out);
 }
 
-@keyframes scale-up-center {
-  0% {
-    transform: scale(0.5);
-  }
+.skipLink:focus-visible {
+  transform: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ==========================================================================
+   LAYOUT PRIMITIVES
+   One container rule replaces the old per-section pixel padding.
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+/* Full-bleed inverted band that still aligns its content to the container */
+.band {
+  background: var(--band);
+  color: var(--band-ink);
+}
+
+/* ==========================================================================
+   TYPOGRAPHIC UTILITIES
+   ========================================================================== */
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.band .eyebrow {
+  color: var(--band-ink-2);
+}
+
+/* --- section headings ----------------------------------------------------
+   One definition for the whole site. Five sections each used to style their
+   own h2, and the page ended up with two heading systems at the same rank:
+   four in a display script at up to 5rem, one in the grotesque at 3rem. The
+   title and its marker are global utilities now, so a new section inherits
+   the system instead of inventing a sixth variation of it.
+
+   The grotesque at 800 does the work the script face was there for: on a page
+   whose body is a serif and whose labels are mono, a fourth voice bought
+   decoration at the cost of the one thing a heading owes the reader, which is
+   telling them instantly what rank they are looking at.
+   ------------------------------------------------------------------------ */
+
+.sectionTitle {
+  font-family: var(--sans);
+  font-size: var(--fs-h2);
+  font-weight: 800;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--ink);
+}
+
+.band .sectionTitle {
+  color: var(--band-ink);
+}
+
+/* The accent the heading itself gives up: colour is carried by a 27px mark
+   beside the line rather than by the type, so the heading stays readable at
+   any size and the accent stays a signal instead of a texture. */
+.sectionMarker {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 27px;
+  height: 27px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.sectionMarker::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: markerPulse 2.8s var(--e-io) infinite;
+}
+
+/* On the band the accent is the hero's violet, and it can take a glow: a
+   bloom reads as light on a dark ground and as a printing fault on paper. */
+.band .sectionMarker {
+  border-color: color-mix(in srgb, var(--band-accent-2) 55%, transparent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--band-accent-2) 30%, transparent);
+}
+
+.band .sectionMarker::after {
+  background: var(--band-accent-2);
+  box-shadow: 0 0 14px var(--band-accent-2);
+}
+
+@keyframes markerPulse {
+  0%,
   100% {
+    opacity: 1;
     transform: scale(1);
   }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.82);
+  }
 }
 
-.fade-in {
-  animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+.mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
 }
 
-@keyframes fade-in {
-  0% {
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   M01 — MASK LINE REVEAL
+   M12 — STAGGERED ENTRANCE
+   Pure CSS. Scroll-driven where supported, timed-on-load everywhere else,
+   so the text is never left stranded at opacity 0 waiting on an observer
+   and it still animates with JavaScript disabled.
+   ========================================================================== */
+
+.maskLine {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.maskInner {
+  display: block;
+  animation: maskRise var(--d-4) var(--e-out) both;
+  animation-delay: calc(var(--i, 0) * 85ms);
+}
+
+@keyframes maskRise {
+  from {
+    transform: translateY(112%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.riseIn {
+  animation: riseIn var(--d-3) var(--e-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes riseIn {
+  from {
     opacity: 0;
+    transform: translateY(18px);
   }
-  100% {
+  to {
     opacity: 1;
+    transform: none;
   }
 }
 
-.slide-in-blurred-left {
-  animation: slide-in-blurred-left 1.5s cubic-bezier(0.23, 1, 0.32, 1) both;
+.popIn {
+  animation: popIn var(--d-3) var(--e-out) both;
+  animation-delay: calc(var(--i, 0) * 80ms);
 }
 
-@keyframes slide-in-blurred-left {
-  0% {
-    transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
-    transform-origin: 100% 50%;
-    filter: blur(40px);
+@keyframes popIn {
+  from {
     opacity: 0;
+    transform: translateY(20px) scale(0.965);
   }
-  100% {
-    transform: translateX(0) scaleY(1) scaleX(1);
-    transform-origin: 50% 50%;
-    filter: blur(0);
+  to {
     opacity: 1;
+    transform: none;
   }
 }
 
-.bounce-in-top {
-  animation: bounce-in-top 1.1s both;
+/* Drive the same keyframes off the element's own scroll position when the
+   browser supports it. Duration is ignored under a view() timeline. */
+@supports (animation-timeline: view()) {
+  .maskInner[data-scroll-driven],
+  .riseIn[data-scroll-driven],
+  .popIn[data-scroll-driven] {
+    animation-timeline: view();
+    animation-delay: 0s;
+    animation-duration: 1ms;
+  }
+
+  .maskInner[data-scroll-driven] {
+    animation-range: entry 10% entry 86%;
+  }
+
+  .riseIn[data-scroll-driven],
+  .popIn[data-scroll-driven] {
+    animation-range: entry 4% cover 26%;
+  }
 }
 
-@keyframes bounce-in-top {
-  0% {
-    transform: translateY(-500px);
-    animation-timing-function: ease-in;
-    opacity: 0;
+/* ==========================================================================
+   LENIS — it owns the scroll position while active
+   ========================================================================== */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+html.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   REDUCED MOTION — one contract for the whole site
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-  38% {
-    transform: translateY(0);
-    animation-timing-function: ease-out;
-    opacity: 1;
-  }
-  55% {
-    transform: translateY(-65px);
-    animation-timing-function: ease-in;
-  }
-  72% {
-    transform: translateY(0);
-    animation-timing-function: ease-out;
-  }
-  81% {
-    transform: translateY(-28px);
-    animation-timing-function: ease-in;
-  }
-  90% {
-    transform: translateY(0);
-    animation-timing-function: ease-out;
-  }
-  95% {
-    transform: translateY(-8px);
-    animation-timing-function: ease-in;
-  }
-  100% {
-    transform: translateY(0);
-    animation-timing-function: ease-out;
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

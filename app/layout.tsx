@@ -1,20 +1,32 @@
 import type { Metadata } from "next";
-import { Poppins, Roboto } from "next/font/google";
+import { Archivo, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import JsonLd from "@/components/JsonLd";
 import Providers from "@/components/Providers";
 import { siteConfig } from "@/data/portfolio";
 import "./globals.css";
 
-const poppins = Poppins({
+/** Display and UI — an industrial grotesque that holds up at 8rem. */
+const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-poppins",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-archivo",
+  display: "swap",
 });
 
-const roboto = Roboto({
+/** Running text — a serif body against a grotesque display, not the reverse. */
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  weight: ["900"],
-  variable: "--font-roboto",
+  weight: ["400", "600"],
+  variable: "--font-source-serif",
+  display: "swap",
+});
+
+/** Labels, metadata and figures. */
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-jetbrains",
+  display: "swap",
 });
 
 const ogImage = {
@@ -80,14 +92,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
-      className={`${poppins.variable} ${roboto.variable}`}
+      data-theme="light"
+      className={`${archivo.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={poppins.className} suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        {/* First tab stop on every route: the bar holds six links and the hero
+            holds several more, so a keyboard reader had to walk the whole of
+            the chrome before reaching any content. */}
+        <a href="#main" className="skipLink">
+          Skip to content
+        </a>
         <JsonLd />
         <Providers>{children}</Providers>
       </body>

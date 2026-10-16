@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Image from "next/image";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import styles from "./ProjectCarousel.module.css";
@@ -32,20 +32,26 @@ export default function ProjectCarousel({
   const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
   const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
 
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") goNext();
-      if (event.key === "ArrowLeft") goPrev();
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [goNext, goPrev]);
+  /**
+   * Scoped to the carousel rather than the window. Bound to `window`, this took
+   * ArrowLeft/ArrowRight away from the whole page — including from scrolling —
+   * whether or not the reader had ever touched the carousel.
+   */
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goNext();
+    }
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goPrev();
+    }
+  };
 
   if (!images.length) return null;
 
   return (
-    <div className={styles.carousel} style={{ maxWidth }}>
+    <div className={styles.carousel} style={{ maxWidth }} onKeyDown={onKeyDown}>
       <div className={styles.viewport}>
         <button
           type="button"
@@ -82,13 +88,12 @@ export default function ProjectCarousel({
         </button>
       </div>
 
-      <div className={styles.dots} role="tablist" aria-label="Screenshot navigation">
+      <div className={styles.dots} role="group" aria-label="Screenshot navigation">
         {images.map((image, index) => (
           <button
             key={image}
             type="button"
-            role="tab"
-            aria-selected={index === activeIndex}
+            aria-current={index === activeIndex ? "true" : undefined}
             aria-label={`Go to screenshot ${index + 1}`}
             className={`${styles.dot} ${index === activeIndex ? styles.dotActive : ""}`}
             onClick={() => goTo(index)}

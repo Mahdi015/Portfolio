@@ -1,139 +1,183 @@
+/* No overflow here on purpose: an ancestor scroll container would stop the
+   reel's sticky viewport from pinning. Clipping happens inside PinnedReel. */
 .section {
-  padding: 3rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* Shorter than --section-y on purpose, and the only section that is: the
+     pinned branch already reserves a full viewport of its own, so the site
+     rhythm on top of that reads as a gap rather than as breathing room. */
+  padding-block: clamp(2.5rem, 6vw, 5rem);
 }
 
-.grid {
+/* --- pinned header --- */
+
+.head {
+  padding-inline: var(--gutter);
   display: flex;
-  justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-top: 5rem;
-  padding: 0 30px;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.25rem);
 }
+
+/* The site's .sectionTitle, with one addition: this heading shares a pinned
+   100vh viewport with a full-size card, so its size answers to the window's
+   height as well as its width. On any normal window the vw term wins and this
+   heading matches every other section's exactly; on a short laptop window the
+   line gives up a few pixels instead of the card losing them — the reel clips,
+   so the card can't. */
+/* Element-qualified so it beats the global .sectionTitle on specificity rather
+   than on bundle order, which is not something a stylesheet should depend on. */
+h2.heading {
+  font-size: clamp(2rem, min(4.6vw, 7vh), 3.25rem);
+}
+
+/* --- reel track: one shared vanishing point for every tilting card --- */
+
+.track {
+  perspective: 1200px;
+  align-items: stretch;
+}
+
+/* Full size again: the card width is what the reel has to scrub past, so
+   shrinking the cards shortened the travel and took the scroll effect with it.
+   The vertical room they need came from the header instead — losing the
+   display line and the hint is worth far more here than 4rem of card. */
+.tilt {
+  flex: 0 0 clamp(15.5rem, 30vw, 28rem);
+  display: flex;
+}
+
+/* --- card --- */
 
 .card {
-  max-width: 310px;
-  min-width: 250px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0)
-  );
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 32px;
-  transition: transform 0.5s linear;
+  width: 100%;
   overflow: hidden;
+  border: 1px solid var(--band-rule);
+  border-radius: var(--r-lg);
+  background: var(--band-surface);
+  backdrop-filter: blur(12px);
+  transition: border-color var(--d-2) var(--e-out),
+    background var(--d-2) var(--e-out);
 }
 
 .card:hover {
-  transform: scale(1.05);
+  border-color: color-mix(in srgb, var(--band-accent) 42%, transparent);
+  background: var(--band-surface-hi);
 }
 
-.cardLink {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
+/* Highlight drawn where the pointer is — `--mx`/`--my` come from Tilt. */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--d-2) var(--e-out);
+  background: radial-gradient(
+    300px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--band-accent) 16%, transparent),
+    transparent 62%
+  );
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* --- media --- */
+
+.media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid var(--band-rule);
+  background: var(--band-2);
 }
 
 .image {
+  display: block;
   width: 100%;
-  height: auto;
-  border-radius: 15px 15px 0 0;
-}
-
-.iconBanner {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-}
-
-.iconBannerOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(22, 26, 43, 0.35) 0%,
-    rgba(22, 26, 43, 0.75) 100%
-  );
-  backdrop-filter: blur(2px);
-}
-
-.appIcon {
-  position: relative;
-  z-index: 1;
-  width: 88px;
-  height: 88px;
-  border-radius: 20px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  height: 100%;
   object-fit: cover;
 }
 
-.details {
-  width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem 1.25rem;
-  gap: 0.5rem;
+.iconMedia {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    134deg,
+    color-mix(in srgb, var(--band-accent) 22%, var(--band-2)),
+    color-mix(in srgb, var(--band-accent-2) 26%, var(--band-2))
+  );
 }
 
-.details h3 {
-  text-align: center;
-  font-weight: 600;
-  font-size: 20px;
+.appIcon {
+  width: clamp(56px, 22%, 88px);
+  height: auto;
+  border-radius: 20%;
+}
+
+/* --- text --- */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  flex: 1;
+  padding: var(--s-4) var(--s-4) var(--s-5);
+}
+
+.index {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--band-accent);
+}
+
+.cardTitle {
+  margin-top: var(--s-1);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--band-ink);
 }
 
 .subtitle {
-  text-align: center;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-accent);
-  line-height: 1.4;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.06em;
+  color: var(--band-ink-2);
 }
 
 .description {
-  text-align: center;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--color-muted);
+  margin-top: var(--s-2);
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--band-ink-2);
+  /* Cards sit shoulder to shoulder in a reel, so the copy is trimmed to keep
+     their inner rhythm identical. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
 }
 
-.button {
-  text-decoration: none;
-  color: white;
-  font-size: 13px;
-  text-transform: capitalize;
-  padding: 20px;
-  font-weight: 500;
-  background: var(--color-primary);
-  border-radius: 4px;
-  margin-bottom: 10px;
-  transition: color 0.3s ease;
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: auto;
+  padding-top: var(--s-4);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--band-ink);
 }
 
-.button:hover {
-  color: wheat;
-}
-
-@media screen and (max-width: 750px) {
-  .grid {
-    flex-direction: column;
-    align-items: center;
-  }
+.card:hover .cta {
+  color: var(--band-accent);
 }

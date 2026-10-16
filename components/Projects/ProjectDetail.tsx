@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import Footer from "@/components/Footer/Footer";
+import Navbar from "@/components/Navbar/Navbar";
 import ProjectCarousel from "@/components/Projects/ProjectCarousel";
 import type { Project } from "@/types/portfolio";
 import styles from "./ProjectDetail.module.css";
@@ -13,13 +15,21 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
 
   return (
     <div className={styles.page}>
-      <header className={styles.topBar}>
-        <Link href="/#projects" className={styles.backLink}>
-          ← Back to Projects
-        </Link>
-      </header>
+      {/* The site's own bar and footer: this page used to render on its own,
+          with a text link as the only way out and no theme control at all —
+          and it is the page a recruiter lands on from the reel. */}
+      <Navbar />
 
-      <main className={styles.content}>
+      <div className={`container ${styles.topBar}`}>
+        <Link href="/#projects" className={styles.backLink}>
+          <span className={styles.arrow} aria-hidden="true">
+            ←
+          </span>
+          Back to projects
+        </Link>
+      </div>
+
+      <main id="main" className={`container ${styles.content}`}>
         <section className={hasGallery ? styles.hero : styles.heroSingle}>
           <div className={styles.heroText}>
             {project.imageStyle === "iconBackground" ? (
@@ -47,7 +57,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
             <h1>{project.title}</h1>
             {project.subtitle && <p className={styles.subtitle}>{project.subtitle}</p>}
             {(project.company || project.location) && (
-              <p className={styles.meta}>
+              <p className="eyebrow">
                 {[project.company, project.location].filter(Boolean).join(" — ")}
               </p>
             )}
@@ -70,7 +80,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
 
         {project.highlights && project.highlights.length > 0 && (
           <section className={styles.highlights}>
-            <h2>Key Contributions</h2>
+            <h2>Key contributions</h2>
             <ul>
               {project.highlights.map((highlight) => (
                 <li key={highlight}>{highlight}</li>
@@ -111,6 +121,8 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
           </div>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { aboutContent, siteConfig, socialLinks } from "@/data/portfolio";
+import { heroContent, siteConfig, socialLinks } from "@/data/portfolio";
 
 export function getPersonJsonLd() {
   const linkedIn = socialLinks.find((link) => link.icon === "linkedin")?.href;
@@ -23,7 +23,7 @@ export function getPersonJsonLd() {
         email: siteConfig.email,
         telephone: siteConfig.phone,
         jobTitle: "Full-Stack Software Engineer",
-        description: aboutContent.bio,
+        description: heroContent.bio,
         address: {
           "@type": "PostalAddress",
           addressLocality: "Sfax",

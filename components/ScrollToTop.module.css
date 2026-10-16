@@ -1,0 +1,44 @@
+/* The control this replaces carried `className="scroll-to-top"`, and no
+   stylesheet on the site defined that class: past 400px of scroll an unstyled
+   arrow appeared in the document flow at the top of the page and pushed
+   everything below it down. */
+.button {
+  position: fixed;
+  right: var(--gutter);
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  /* 44px, the floor for a control meant to be hit with a thumb. */
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--rule-2);
+  border-radius: 50%;
+  /* Over whatever it happens to be floating above, including the dark band. */
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(10px);
+  font-size: 13px;
+  color: var(--ink-2);
+  animation: scrollTopIn var(--d-2) var(--e-out) both;
+  transition: color var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out), background var(--d-2) var(--e-out),
+    transform var(--d-2) var(--e-out);
+}
+
+.button:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  transform: translateY(-2px);
+}
+
+@keyframes scrollTopIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

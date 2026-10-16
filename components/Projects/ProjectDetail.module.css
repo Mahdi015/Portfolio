@@ -1,54 +1,80 @@
+/* ==========================================================================
+   PROJECT DETAIL
+   The last part of the site still on pre-token CSS: hardcoded px type outside
+   the scale, radii that matched nothing, `color: wheat` on the one button, and
+   two panels built out of white rgba fills — which made them invisible on the
+   paper they actually sit on, and a white-on-white button in the dark theme.
+   Everything below reads the same tokens as the home page.
+   ========================================================================== */
+
 .page {
   min-height: 100vh;
-  background: var(--color-bg);
-  color: var(--color-text);
+  /* The bar is fixed, so the page has to hold its own band open. */
+  padding-top: calc(var(--nav-h) + var(--nav-gap));
+  background: var(--paper);
+  color: var(--ink);
 }
 
+/* --- back out of the page ---
+   Was a 14px text link in muted ink, which is a 19px-tall target and the only
+   way off this page. Now a pill on the site's label type, 44px of hit area. */
 .topBar {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 0;
+  padding-block: var(--s-4) var(--s-6);
 }
 
 .backLink {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 14px;
+  gap: var(--s-2);
+  padding: 0.8rem 1.25rem;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r-pill);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
   font-weight: 500;
-  color: var(--color-muted);
-  text-decoration: none;
-  transition: color 0.2s ease;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-2);
+  transition: color var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out), background var(--d-2) var(--e-out);
 }
 
 .backLink:hover {
-  color: var(--color-accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
+.arrow {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+/* --- masthead --- */
+
 .content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding-bottom: var(--s-9);
 }
 
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-  gap: 3rem;
+  gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: var(--s-8);
 }
 
 .heroSingle {
   display: flex;
   flex-direction: column;
-  margin-bottom: 3rem;
+  margin-bottom: var(--s-8);
 }
 
 .heroText {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  align-items: flex-start;
+  gap: var(--s-3);
 }
 
 .iconWrap {
@@ -56,8 +82,9 @@
 }
 
 .appIcon {
-  border-radius: 20px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  /* A proportion, not 20px: the icon renders at several sizes. */
+  border-radius: 22%;
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--ink) 22%, transparent);
 }
 
 .coverWrap {
@@ -68,137 +95,150 @@
 .coverImage {
   width: 100%;
   height: auto;
-  border-radius: 16px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  border-radius: var(--r-lg);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--ink) 22%, transparent);
 }
 
+/* The page title, at the same size as a section heading on the home page —
+   this is an h1 on a page of its own, so it does not need to outrank them. */
 .heroText h1 {
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 600;
-  line-height: 1.15;
+  font-size: var(--fs-h2);
+  font-weight: 800;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
 }
 
 .subtitle {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--color-accent);
+  font-family: var(--sans);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  color: var(--accent);
 }
 
-.meta {
-  font-size: 0.95rem;
-  color: var(--color-muted);
-}
-
+/* Running text, so it takes the body serif like every other paragraph on the
+   site rather than the UI sans. */
 .description {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: var(--color-muted);
-  max-width: 52ch;
+  max-width: 62ch;
+  margin-top: var(--s-2);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
 }
 
 .carouselWrap {
   width: 100%;
 }
 
+/* --- panels ---
+   `linear-gradient(rgba(255,255,255,.08), rgba(255,255,255,.02))` over a white
+   border: a dark-theme card rendered on paper, i.e. an invisible one. A tinted
+   surface and a real hairline do the same job in either theme. */
 .highlights {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.08),
-    rgba(255, 255, 255, 0.02)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: var(--s-6);
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  background: var(--paper-2);
 }
 
 .highlights h2 {
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin-bottom: 1.25rem;
-}
-
-.highlights ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.highlights li {
-  position: relative;
-  padding-left: 1.35rem;
-  line-height: 1.7;
-  color: var(--color-muted);
-}
-
-.highlights li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--color-accent);
+  margin-bottom: var(--s-5);
+  font-size: var(--fs-h3);
   font-weight: 700;
 }
 
+.highlights ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  list-style: none;
+}
+
+/* The same accent dot Experience uses for its bullets, drawn rather than typed:
+   a "•" glyph at weight 700 sat on the text baseline and changed size with the
+   font. This one centres on the first line's cap height. */
+.highlights li {
+  position: relative;
+  max-width: 78ch;
+  padding-left: var(--s-5);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Code stays on the band's ground in both themes — a terminal is dark, and the
+   page already owns that surface. */
 .codeBlock {
-  margin-top: 1.5rem;
-  padding: 1rem 1.15rem;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: var(--s-5);
+  padding: var(--s-4) var(--s-5);
+  border: 1px solid var(--band-rule);
+  border-radius: var(--r-md);
+  background: var(--band);
   overflow-x: auto;
-  font-size: 0.85rem;
-  line-height: 1.7;
-  color: var(--color-text);
+  font-family: var(--mono);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  color: var(--band-ink);
 }
 
 .quickStartNote {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: var(--color-muted);
+  margin-top: var(--s-4);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
 }
 
+/* --- the one action ---
+   Was `background: var(--ink)` with `color: var(--band-ink)`: both resolve to
+   near-white in the dark theme, so the label vanished into the button. On the
+   accent pair it is legible in either theme by construction. And the hover
+   colour was `wheat`, a named CSS colour belonging to no palette on the site.
+   -------------------------------------------------------------------------- */
 .actions {
   display: flex;
-  justify-content: flex-start;
 }
 
 .demoButton {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: #fff;
-  font-size: 14px;
+  gap: var(--s-3);
+  padding: 1rem 1.75rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
   font-weight: 500;
-  padding: 0.95rem 1.75rem;
-  background: var(--color-primary);
-  border-radius: 8px;
-  transition: transform 0.2s ease, color 0.2s ease;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  transition: transform var(--d-2) var(--e-out),
+    background var(--d-2) var(--e-out), color var(--d-2) var(--e-out);
 }
 
 .demoButton:hover {
-  color: wheat;
+  background: transparent;
+  color: var(--accent);
   transform: translateY(-2px);
 }
 
-@media screen and (max-width: 900px) {
+@media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: var(--s-6);
   }
 
+  /* The screenshots are the point of the page on a phone. */
   .carouselWrap {
     order: -1;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .content {
-    padding: 1.5rem 1rem 3rem;
-  }
-
-  .highlights {
-    padding: 1.5rem;
   }
 }
