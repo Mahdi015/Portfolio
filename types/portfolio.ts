@@ -1,5 +1,3 @@
-export type Theme = "light" | "dark";
-
 export type SocialIcon =
   | "linkedin"
   | "github"

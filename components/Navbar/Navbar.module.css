@@ -165,23 +165,6 @@
   gap: var(--s-3);
 }
 
-.themeToggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  font-size: 13px;
-  color: var(--nav-dim);
-  transition: color var(--d-2) var(--e-out), background var(--d-2) var(--e-out);
-}
-
-.themeToggle:hover {
-  color: var(--nav-hover);
-  background: color-mix(in srgb, currentColor 12%, transparent);
-}
-
 .cta {
   /* Same split as the links. It matters most here: the CTA's border is always
      visible, so the label riding high inside it is on show at all times. */

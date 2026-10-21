@@ -3,10 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { RiCloseLine, RiMenu3Line } from "react-icons/ri";
-import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { navLinks, navCta, siteConfig } from "@/data/portfolio";
 import { setScrollLock } from "@/lib/lenis";
-import { useTheme } from "@/lib/theme";
 import styles from "./Navbar.module.css";
 
 /** Initials, taken from the configured name so it can't drift out of sync. */
@@ -25,7 +23,6 @@ function Sparkle() {
 }
 
 export default function Navbar() {
-  const { theme, toggleTheme } = useTheme();
   /**
    * The bar now appears on project pages too, where none of the sections it
    * links to exist. The data keeps bare hashes — the scroll-spy matches on
@@ -281,17 +278,6 @@ export default function Navbar() {
       </nav>
 
       <div className={styles.actions}>
-        <button
-          type="button"
-          className={styles.themeToggle}
-          onClick={toggleTheme}
-          aria-label={
-            theme === "light" ? "Switch to dark theme" : "Switch to light theme"
-          }
-        >
-          {theme === "light" ? <BsFillMoonFill /> : <BsFillSunFill />}
-        </button>
-
         <a href={hrefFor(navCta.href)} className={styles.cta}>
           {navCta.label}
         </a>

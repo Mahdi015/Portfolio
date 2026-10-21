@@ -161,6 +161,11 @@
   --d-4: 0.9s;
 }
 
+/* The site is pinned to dark: <html> ships `data-theme="dark"` in the served
+   markup, so this block always applies and the :root values above act as its
+   fallback layer rather than a theme anyone can reach. The light palette is
+   kept intact — it costs nothing, and restoring the toggle later is then a
+   matter of putting the switch back, not rebuilding a palette. */
 html[data-theme="dark"] {
   /* Paper in dark is the hero's ground lifted twice, so the band below it is
      still visibly deeper. Ink is the hero's --h-ink verbatim. */

@@ -91,8 +91,6 @@ export const metadata: Metadata = {
   },
 };
 
-const themeInitScript = `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t)}}catch(e){}})();`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -101,13 +99,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="light"
+      data-theme="dark"
       className={`${archivo.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
       <body suppressHydrationWarning>
         {/* First tab stop on every route: the bar holds six links and the hero
             holds several more, so a keyboard reader had to walk the whole of
