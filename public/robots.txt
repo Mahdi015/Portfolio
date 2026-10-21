@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mahdiferiani.netlify.app/sitemap.xml
+Sitemap: https://mahdiferiani.dev/sitemap.xml

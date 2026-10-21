@@ -15,7 +15,7 @@ export const siteConfig = {
   title: "Mahdi Feriani | Full-Stack Software Engineer",
   description:
     "Full-Stack Software Engineer with 3+ years of experience building scalable web and mobile applications with TypeScript, Vue.js, React, React Native, and NestJS.",
-  url: "https://mahdiferiani.netlify.app",
+  url: "https://mahdiferiani.dev",
   email: "mahdiferiani@proton.me",
   phone: "(+216) 22 890 202",
   location: "Sfax, Tunisia",
