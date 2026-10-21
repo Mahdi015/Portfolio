@@ -13,6 +13,13 @@ import { getProjectSlugs } from "@/lib/projects";
  * site. A date that only moves when the content does is worth more than a
  * fresh one that is always wrong.
  */
+/**
+ * Required by `output: "export"`: metadata routes are treated as dynamic
+ * handlers unless told otherwise, and the export refuses to guess. Nothing
+ * here reads the request, so emitting it once at build time is correct.
+ */
+export const dynamic = "force-static";
+
 const CONTENT_UPDATED = "2026-10-16";
 
 export default function sitemap(): MetadataRoute.Sitemap {

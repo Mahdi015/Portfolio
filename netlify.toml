@@ -1,9 +1,9 @@
+# Kept as a zero-cost fallback host. The site is a static export now, so there
+# is no Next.js runtime to adapt — publish the exported directory directly and
+# drop the server plugin that used to wrap `.next`.
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "22"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
