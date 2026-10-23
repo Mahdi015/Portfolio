@@ -72,7 +72,7 @@ export const heroContent = {
    * Swap for the generated 3D character (transparent PNG, centred, headroom
    * at the top — the hero crops it at the bottom edge).
    */
-  character: "/images/header/me-3d.png",
+  character: "/images/header/me-3d.webp",
 } as const;
 
 /** The three pills flanking the hero title card. */
@@ -307,7 +307,7 @@ export const projects: Project[] = [
     location: "Tunisia",
     description:
       "Full-stack pet adoption platform for Tunisia. Users post pets, admins moderate listings, adopters request homes, and chat unlocks after acceptance. Built with Next.js 15, NestJS, Prisma, and PostgreSQL in a Turborepo monorepo.",
-    image: "/images/projects/adopti.png",
+    image: "/images/projects/adopti.webp",
     demoUrl: "https://adopti-tn-ashy.vercel.app/",
     linkLabel: "View Live Demo",
     galleryAspectRatio: "16 / 9",
@@ -315,7 +315,7 @@ export const projects: Project[] = [
     /* Byte-identical to the cover above, so it points at the same file:
        two copies meant the same 356KB shipped twice and the image
        optimizer re-encoded it twice under two URLs. */
-    gallery: ["/images/projects/adopti.png"],
+    gallery: ["/images/projects/adopti.webp"],
     highlights: [
       "Built a Tunisia-focused pet adoption platform that replaces scattered social posts with a moderated workflow: list a pet, get admin approval, receive requests, then unlock chat once accepted.",
       "Shipped end-to-end product features including browse/filter, pet detail pages, listings management, favorites, adoption requests, profiles, and email verification / password reset auth.",
@@ -330,13 +330,13 @@ export const projects: Project[] = [
     company: "Open Source",
     description:
       "Open-source AI tool that turns a video script into ranked B-roll photos and videos from stock libraries and optional social platforms.",
-    image: "/images/projects/framefind.png",
+    image: "/images/projects/framefind.webp",
     demoUrl: "https://github.com/Mahdi015/FrameFind",
     linkLabel: "View on GitHub",
     galleryAspectRatio: "16 / 9",
     galleryMaxWidth: "720px",
     /* Same file as the cover — see the note on Adopti above. */
-    gallery: ["/images/projects/framefind.png"],
+    gallery: ["/images/projects/framefind.webp"],
     highlights: [
       "Built a full-stack TypeScript monorepo with a Next.js frontend and NestJS API for script-to-visuals search.",
       "Used Gemini/Groq to split narration into scenes, generate visual keywords, and rank B-roll matches by relevance.",

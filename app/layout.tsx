@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import JsonLd from "@/components/JsonLd";
 import Providers from "@/components/Providers";
@@ -52,10 +52,17 @@ const jetbrainsMono = localFont({
   adjustFontFallback: "Arial",
 });
 
+/**
+ * 1200x630 — the 1.91:1 ratio LinkedIn, X and Facebook lay their link cards
+ * out for. The square og-image.jpg this used to point at was centre-cropped
+ * by every one of them, which cut the monogram off top and bottom. That file
+ * stays for the Person schema in lib/json-ld.ts, where square is the better
+ * shape.
+ */
 const ogImage = {
-  url: "/og-image.jpg",
+  url: "/og-cover.jpg",
   width: 1200,
-  height: 1200,
+  height: 630,
   alt: `${siteConfig.name} — Full-Stack Software Engineer`,
   type: "image/jpeg",
 };
@@ -126,6 +133,18 @@ export const metadata: Metadata = {
   verification: {
     google: "90mDw4kYc8NrdT0H4AZvEZdGqBgvQJdvG2DsFAYIxBY",
   },
+};
+
+/**
+ * Paints the mobile browser chrome to match the page instead of leaving the
+ * stock white bar above a dark site. Single value rather than a light/dark
+ * pair because the site is pinned dark.
+ *
+ * This lives on `viewport`, not `metadata` — Next 15 moved it and warns at
+ * build time if it is declared in the wrong export.
+ */
+export const viewport: Viewport = {
+  themeColor: "#120f22",
 };
 
 export default function RootLayout({
