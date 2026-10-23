@@ -63,9 +63,23 @@ export const metadata: Metadata = {
     "Tunisia",
   ],
   authors: [{ name: siteConfig.name }],
+  /**
+   * Google only accepts a search-result favicon whose sides are a multiple of
+   * 48px, so both files are sized to that rule: the ICO carries 16/32/48 and
+   * the PNG is 192 (48x4). The sizes below are declared by hand rather than
+   * read off the files, which is how they came to claim 256x256 after the
+   * artwork had been resized — keep them in step with the real dimensions.
+   *
+   * The .ico is listed first and lives at the site root because that is the
+   * path crawlers probe when they do not parse the markup.
+   */
   icons: {
-    icon: [{ url: "/icon.png", type: "image/png", sizes: "256x256" }],
-    apple: [{ url: "/icon.png", type: "image/png", sizes: "256x256" }],
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon", sizes: "16x16 32x32 48x48" },
+      { url: "/icon.png", type: "image/png", sizes: "192x192" },
+    ],
+    shortcut: [{ url: "/favicon.ico" }],
+    apple: [{ url: "/icon.png", type: "image/png", sizes: "192x192" }],
   },
   openGraph: {
     title: siteConfig.title,
