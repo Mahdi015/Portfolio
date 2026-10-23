@@ -1,9 +1,30 @@
-# Kept as a zero-cost fallback host. The site is a static export now, so there
-# is no Next.js runtime to adapt — publish the exported directory directly and
-# drop the server plugin that used to wrap `.next`.
+# This site has moved to mahdiferiani.dev, which Cloudflare Pages serves. What
+# is left here is the old address kept alive so the links already in the world
+# keep working — the CV PDF that has been sent to employers links to this
+# subdomain, and letting it lapse would hand the name to whoever claims it
+# next.
+#
+# The build still runs. It costs about two of the 300 free monthly build
+# minutes and it is what makes this a working fallback: delete the redirect
+# below and Netlify serves the real site again on the next deploy.
+
 [build]
   command = "npm run build"
   publish = "out"
 
 [build.environment]
   NODE_VERSION = "22"
+
+# `force = true` is the part that matters. Without it Netlify applies a
+# redirect only where no published file matches the path, and since the build
+# publishes a real file for every route, the rule would never fire.
+#
+# `:splat` carries the rest of the path through, so /projects/msafer lands on
+# its own page rather than the home page. Query strings are preserved by
+# default. 301 rather than 302: the move is permanent, and only a permanent
+# redirect passes the accumulated ranking credit to the new domain.
+[[redirects]]
+  from = "/*"
+  to = "https://mahdiferiani.dev/:splat"
+  status = 301
+  force = true

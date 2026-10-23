@@ -2,6 +2,6 @@
 
 Personal portfolio website.
 
-**Live:** [mahdiferiani.netlify.app](https://mahdiferiani.netlify.app)
+**Live:** [mahdiferiani.dev](https://mahdiferiani.dev)
 
 Built with Next.js, React, and TypeScript.
