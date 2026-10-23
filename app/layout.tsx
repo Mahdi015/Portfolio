@@ -1,32 +1,55 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
+import localFont from "next/font/local";
 import JsonLd from "@/components/JsonLd";
 import Providers from "@/components/Providers";
 import { siteConfig } from "@/data/portfolio";
 import "./globals.css";
 
+/**
+ * The three families are served from ./fonts rather than next/font/google.
+ *
+ * next/font/google resolves each family over the network while the bundle is
+ * being built, which made every deploy depend on Google answering nine
+ * requests from a datacenter IP. Google rate-limits those, and when a response
+ * came back as something other than font CSS the loader's regex returned null
+ * and the build died on `Cannot read properties of null (reading '1')` — a
+ * failure with no relation to the commit that triggered it. Vendoring the
+ * files takes the network out of the build entirely.
+ *
+ * These are the variable cuts of the same faces, latin subset, so one file per
+ * family covers every weight the site uses and the rendered result is
+ * unchanged. Nothing is served from Google at runtime either way: next/font
+ * always self-hosts what it resolves.
+ */
+
 /** Display and UI — an industrial grotesque that holds up at 8rem. */
-const archivo = Archivo({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+const archivo = localFont({
+  src: "./fonts/Archivo-Variable.woff2",
+  weight: "100 900",
+  style: "normal",
   variable: "--font-archivo",
   display: "swap",
+  adjustFontFallback: "Arial",
 });
 
 /** Running text — a serif body against a grotesque display, not the reverse. */
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  weight: ["400", "600"],
+const sourceSerif = localFont({
+  src: "./fonts/SourceSerif4-Variable.woff2",
+  weight: "200 900",
+  style: "normal",
   variable: "--font-source-serif",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
 /** Labels, metadata and figures. */
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+const jetbrainsMono = localFont({
+  src: "./fonts/JetBrainsMono-Variable.woff2",
+  weight: "100 800",
+  style: "normal",
   variable: "--font-jetbrains",
   display: "swap",
+  adjustFontFallback: "Arial",
 });
 
 const ogImage = {

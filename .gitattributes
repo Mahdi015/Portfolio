@@ -1,0 +1,16 @@
+# core.autocrlf is on for this checkout, which is right for the source but
+# must never touch the binary assets — a single byte rewritten in a font or an
+# icon corrupts the file with no error at commit time. Mark them explicitly
+# rather than relying on Git's content sniffing.
+*.woff2 binary
+*.woff  binary
+*.ico   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.mp3   binary
+*.wav   binary
+*.pdf   binary
+
+# Normalise line endings in text so the repo stays consistent across machines.
+* text=auto
