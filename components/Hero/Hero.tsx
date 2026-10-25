@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   FaFacebookF,
@@ -39,8 +39,33 @@ const socialIcons: Record<SocialIcon, IconType> = {
 const [firstName, ...restName] = siteConfig.name.split(" ");
 const lastName = restName.join(" ");
 
+/**
+ * True on phone-width viewports, matching Hero.module.css's 760px breakpoint.
+ *
+ * The scroll-driven split below moves each half of the wordmark by 88% of its
+ * own width. There is room for that beside a centred figure on a wide screen;
+ * at 390px it just drives the longer word off the right edge, which is what
+ * clipped FERIANI to "FERIA" on every phone. Starts false so the server markup
+ * and the first client render agree, then corrects on mount.
+ */
+function useCompactViewport() {
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 760px)");
+    const sync = () => setCompact(query.matches);
+
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+
+  return compact;
+}
+
 export default function Hero() {
   const reduce = useReducedMotion();
+  const compact = useCompactViewport();
   const cinematicRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -109,14 +134,22 @@ export default function Hero() {
             <h1 className={styles.wordmark}>
               <motion.span
                 className={`${styles.name} ${styles.nameFirst}`}
-                style={motionStyle({ x: firstX, opacity: nameOpacity })}
+                style={motionStyle(
+                  compact
+                    ? { opacity: nameOpacity }
+                    : { x: firstX, opacity: nameOpacity },
+                )}
               >
                 {firstName}
               </motion.span>
 
               <motion.span
                 className={`${styles.name} ${styles.nameLast}`}
-                style={motionStyle({ x: lastX, opacity: nameOpacity })}
+                style={motionStyle(
+                  compact
+                    ? { opacity: nameOpacity }
+                    : { x: lastX, opacity: nameOpacity },
+                )}
               >
                 {lastName}
               </motion.span>

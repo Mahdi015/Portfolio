@@ -16,6 +16,16 @@ export default function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    /**
+     * Touch devices get the platform's own scrolling. `syncTouch` is off
+     * below, so on a phone Lenis smooths nothing — but it still runs a
+     * requestAnimationFrame loop for the life of the page, doing work on
+     * every frame the user scrolls and changing none of the output. Bail
+     * before constructing it rather than paying for an instance that cannot
+     * affect anything.
+     */
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
     const lenis = new Lenis({
       duration: 1.05,
       smoothWheel: true,

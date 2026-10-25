@@ -132,6 +132,13 @@ export default function Particles() {
     if (!starCtx || !cloudCtx) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    /**
+     * Whether there is a cursor to follow. On touch, `pointermove` still fires
+     * — a drag to scroll is a pointer move — which flipped `pointerSeen` true
+     * and switched on the per-frame pointer glow and parallax easing for an
+     * effect that has no cursor behind it. Gate the listener instead.
+     */
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
 
     let layers: Layer[] = [];
     let clouds: Cloud[] = [];
@@ -653,7 +660,9 @@ export default function Particles() {
     };
 
     window.addEventListener("resize", onResize);
-    window.addEventListener("pointermove", onPointer, { passive: true });
+    if (finePointer) {
+      window.addEventListener("pointermove", onPointer, { passive: true });
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 

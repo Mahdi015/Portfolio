@@ -25,7 +25,12 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  height: 100dvh;
+  /* svh, not dvh. dvh re-resolves as a phone's URL bar collapses and expands,
+     which resizes this sticky box mid-scroll and relays out everything inside
+     it on the frames where the user is actually moving — the stutter reads as
+     the scroll itself being janky. svh is the toolbar-visible height and never
+     changes, so the stage is laid out once and simply scrolls. */
+  height: 100svh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -198,7 +203,7 @@
   display: block;
   width: auto;
   height: 100%;
-  max-height: min(62vh, 530px);
+  max-height: min(62svh, 530px);
   /* Kept above height x 0.79 (the file's aspect): the character is padded to
      put its head on the centre axis, so the file is wider than the figure,
      and too tight a cap here makes width the binding constraint and silently
@@ -284,22 +289,46 @@
 @media (max-width: 760px) {
   .stage {
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: stretch;
+    /* The names ride at the top of the stage rather than its middle. The
+       figure is absolutely positioned to the bottom of this same box, so
+       centring the type dropped it exactly onto the face — at 390px the head
+       covered the middle of both words and neither was readable. */
+    justify-content: flex-start;
     gap: 0;
   }
 
+  /* 14vw overflowed the viewport: FERIANI is the longer word and it ran off
+     the right edge from about 430px down. `white-space: nowrap` is holding the
+     composition together — the two words are meant to split, not wrap — so the
+     size comes down instead. This keeps the longer word inside the gutters
+     from 320px up. */
   .name {
-    font-size: clamp(2rem, 14vw, 4.25rem);
+    font-size: clamp(1.75rem, 10.5vw, 3.25rem);
   }
 
+  /* Both halves hang off the left margin here rather than splitting left and
+     right. The split needs horizontal room either side of the figure to read
+     as a composition; in a 390px column it only pushed FERIANI — the longer
+     word — past the right edge, where it rendered as "FERIA". Stacked flush
+     left, the wordmark reads as one block and cannot overflow. */
+  .nameFirst,
   .nameLast {
-    align-self: flex-end;
+    align-self: flex-start;
+    text-align: left;
+  }
+
+  /* The wordmark sits directly under the availability line once the stage is
+     top-aligned; this is the gap that keeps them from reading as one block. */
+  .nameFirst {
+    margin-top: clamp(0.5rem, 2.5vh, 1.25rem);
   }
 
   .characterImage {
-    max-width: 58vw;
-    max-height: 44vh;
+    max-width: 68vw;
+    /* svh for the same reason as .sticky, and shorter than the old 44vh so
+       the figure keeps to the lower half and clears the type above it. */
+    max-height: 40svh;
   }
 
   .year {
